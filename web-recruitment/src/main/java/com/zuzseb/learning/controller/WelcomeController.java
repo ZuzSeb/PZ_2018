@@ -32,7 +32,7 @@ public class WelcomeController {
 	public String logIn(Map<String, Object> model) {
 		model.put("message", configurationService.getMessage());
 		model.put("cat", "Cat");
-		return "log-in";
+		return "welcome";
 	}
 	
 	@RequestMapping("/welcome")
