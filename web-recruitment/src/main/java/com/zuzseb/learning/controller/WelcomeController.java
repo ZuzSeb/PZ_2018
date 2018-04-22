@@ -1,11 +1,14 @@
 package com.zuzseb.learning.controller;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import com.zuzseb.learning.configuration.ConfigurationService;
+import com.zuzseb.learning.model.Job;
 import com.zuzseb.learning.model.Post;
+import com.zuzseb.learning.repository.JobRepository;
 import com.zuzseb.learning.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,9 @@ public class WelcomeController {
 
 	@Autowired
     private PostRepository postRepository;
+
+	@Autowired
+    private JobRepository jobRepository;
 	
 	@Autowired
 	private LogIn logIn;
@@ -80,6 +86,13 @@ public class WelcomeController {
         List<Post> posts = postRepository.findAll();
         model.put("posts", posts);
 	    return "all-posts";
+    }
+
+    @GetMapping("/all-jobs")
+    public String showAllJobs(Map<String, Object> model) {
+	    List<Job> posts = jobRepository.findAll();
+        model.put("posts", posts);
+	    return "all-jobs";
     }
 	
 }
