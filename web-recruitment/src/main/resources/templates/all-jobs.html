@@ -30,22 +30,11 @@
 
 <div class="container">
 
-    <table id="myTableId">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Description</th>
+        <tr th:each="job : ${jobs}">
+            <td th:text="${job.id}" ></td>
+            <td th:text="${job.title}" ></td>
+            <td th:text="${job.description}" ></td>
         </tr>
-        </thead>
-        <tbody>
-        <tr th:each="post : ${posts}">
-            <td th:text="${post.id}" ></td>
-            <td th:text="${post.title}" ></td>
-            <td th:text="${post.description}" ></td>
-        </tr>
-        </tbody>
-    </table>
 
 </div>
 <!-- /.container -->

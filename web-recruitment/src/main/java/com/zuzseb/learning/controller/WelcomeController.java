@@ -90,8 +90,8 @@ public class WelcomeController {
 
     @GetMapping("/all-jobs")
     public String showAllJobs(Map<String, Object> model) {
-	    List<Job> posts = jobRepository.findAll();
-        model.put("posts", posts);
+	    List<Job> jobs = jobRepository.findAll();
+        model.put("jobs", jobs);
 	    return "all-jobs";
     }
 	
