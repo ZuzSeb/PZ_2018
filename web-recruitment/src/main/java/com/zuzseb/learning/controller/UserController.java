@@ -2,7 +2,7 @@ package com.zuzseb.learning.controller;
 
 import com.zuzseb.learning.configuration.ConfigurationService;
 import com.zuzseb.learning.model.User;
-import com.zuzseb.learning.repository.UserRepository;
+import com.zuzseb.learning.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,20 +15,25 @@ import java.util.Map;
 public class UserController {
 
     @Autowired
-    ConfigurationService configurationService;
+    private UserService userService;
 
     @Autowired
-    private UserRepository userRepository;
+    private ConfigurationService configurationService;
 
     @PostMapping("/user")
     public String createUser(@ModelAttribute("user") User user, Map<String, Object> model) {
         System.out.println("User: " + user);
-        userRepository.save(user);
-        model.put("infoMessage", configurationService.getUserSuccessfullyCreatedText());
-        return "info/success";
+        if (userService.isEmailTaken(user.getEmail())) {
+            model.put("infoMessage", "User with this email already exists!!!");
+            return "info/error";
+        } else {
+            userService.save(user);
+            model.put("infoMessage", configurationService.getUserSuccessfullyCreatedText());
+            return "info/success";
+        }
     }
 
-    @GetMapping("log-in")
+    @GetMapping("/log-in")
     public String logIn() {
         return "/";
     }

@@ -41,3 +41,11 @@ div.info {
     margin: 25px;
     padding: 10px;
 }
+
+div.error {
+    border: 2px solid #ff0000;
+    border-radius: 10px;
+    text-align: center;
+    margin: 25px;
+    padding: 10px;
+}
