@@ -29,12 +29,18 @@ public class WelcomeController {
 	private LogIn logIn;
 	
 	@RequestMapping("/")
-	public String logIn(Map<String, Object> model) {
+	public String welcomePage(Map<String, Object> model) {
 		model.put("message", configurationService.getMessage());
 		model.put("cat", "Cat");
 		return "welcome";
 	}
-	
+
+	@RequestMapping("/log-in")
+	public String logIn(Map<String, Object> model) {
+		model.put("message", configurationService.getMessage());
+		return "log-in";
+	}
+
 	@RequestMapping("/welcome")
 	public String welcome() {
 		return "welcome";
@@ -52,7 +58,7 @@ public class WelcomeController {
 		return "log-in";
 	}
 	
-	@RequestMapping(value = "/log-in", method = RequestMethod.GET)
+	@RequestMapping(value = "/authorization", method = RequestMethod.GET)
 	public String logIn(@RequestParam("email") String email, @RequestParam("pwd") String pwd, Map<String, Object> model) {
 		model.put("message", Arrays.asList(email.split("@")).get(0));
 		return (logIn.checkCredencials(email, pwd)) ? "welcome" : "no-access";
@@ -79,4 +85,10 @@ public class WelcomeController {
         model.put("posts", posts);
 	    return "all-posts";
     }
+
+    @GetMapping("/registration")
+	public String registration(Map<String, Object> model) {
+		return "registration";
+	}
+	
 }

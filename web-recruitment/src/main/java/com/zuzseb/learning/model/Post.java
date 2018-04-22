@@ -14,9 +14,9 @@ public class Post {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "id")
     private String id;
-    @Column
+    @Column(name = "title")
     private String title;
-    @Column
+    @Column(name = "description")
     private String description;
 
     public Post() {
