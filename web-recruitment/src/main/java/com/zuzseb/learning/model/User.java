@@ -22,18 +22,18 @@ public class User {
     private String email;
     @Column(name = "password")
     private String password;
-    @Column(name = "occupation")
-    private String occupation;
+    @Column(name = "description")
+    private String description;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String password, String occupation) {
+    public User(String firstName, String lastName, String email, String password, String description) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.occupation = occupation;
+        this.description = description;
     }
 
     public String getFirstName() {
@@ -68,31 +68,38 @@ public class User {
         this.password = password;
     }
 
-    public String getOccupation() {
-        return occupation;
+    public String getDescription() {
+        return description;
     }
 
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(occupation, user.occupation);
+
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        return description != null ? description.equals(user.description) : user.description == null;
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, firstName, lastName, email, password, occupation);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -103,7 +110,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", occupation='" + occupation + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

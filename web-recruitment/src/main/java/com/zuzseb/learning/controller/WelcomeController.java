@@ -1,12 +1,9 @@
 package com.zuzseb.learning.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
 import com.zuzseb.learning.configuration.ConfigurationService;
 import com.zuzseb.learning.model.Post;
 import com.zuzseb.learning.repository.PostRepository;
+import com.zuzseb.learning.service.LogIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.zuzseb.learning.service.LogIn;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class WelcomeController {
@@ -28,18 +27,6 @@ public class WelcomeController {
 	@Autowired
 	private LogIn logIn;
 	
-	@RequestMapping("/")
-	public String welcomePage(Map<String, Object> model) {
-		model.put("message", configurationService.getMessage());
-		model.put("cat", "Cat");
-		return "welcome";
-	}
-
-	@RequestMapping("/log-in")
-	public String logIn(Map<String, Object> model) {
-		model.put("message", configurationService.getMessage());
-		return "log-in";
-	}
 
 	@RequestMapping("/welcome")
 	public String welcome() {
@@ -64,11 +51,6 @@ public class WelcomeController {
 		return (logIn.checkCredencials(email, pwd)) ? "welcome" : "no-access";
 	}
 	
-	@RequestMapping("/no-access")
-	public String noAccess() {
-		return "no-access";
-	}
-	
 	@RequestMapping("/adding-pet")
 	public String addingPetPage() {
 		return "adding-pet";
@@ -85,10 +67,4 @@ public class WelcomeController {
         model.put("posts", posts);
 	    return "all-posts";
     }
-
-    @GetMapping("/registration")
-	public String registration(Map<String, Object> model) {
-		return "registration";
-	}
-	
 }

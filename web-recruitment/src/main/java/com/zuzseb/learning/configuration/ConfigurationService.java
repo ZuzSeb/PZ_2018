@@ -9,15 +9,15 @@ public class ConfigurationService {
 	// inject via application.properties
 	@Value("${welcome.message:test}")
 	private String message;
+
+	@Value("${info.user.success.creation}")
+	private String userSuccessfullyCreatedText;
 	
 	public String getMessage() {
 		return message;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public String getUserSuccessfullyCreatedText() {
+		return userSuccessfullyCreatedText;
 	}
-	
-	
-
 }

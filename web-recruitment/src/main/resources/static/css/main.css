@@ -33,3 +33,11 @@ div.footer {
     margin: 25px;
     padding: 25px;
 }
+
+div.info {
+    border: 2px solid #7FFF00;
+    border-radius: 10px;
+    text-align: center;
+    margin: 25px;
+    padding: 10px;
+}
