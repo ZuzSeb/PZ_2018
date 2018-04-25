@@ -1,7 +1,10 @@
 package com.zuzseb.learning.controller;
 
+import com.zuzseb.learning.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.Map;
 
 /**
  * This controller handles displaying pages. No logic in requests.
@@ -20,7 +23,8 @@ public class PageController {
     }
 
     @GetMapping("/registration")
-    public String registration() {
+    public String registration(Map<String, Object> model) {
+        model.put("user", new User());
         return "registration";
     }
 

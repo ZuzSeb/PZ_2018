@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml"
+      xmlns:modelAttribute="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Profile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css"
+          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"
+          href="../../css/main.css"/>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="navbar-collapse collapse">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Web recruitment</a>
+        </div>
+        <ul class="nav navbar-nav navbar-left">
+            <li class="active"><a href="#">Home</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="rounded-div-outer">
+            <form action="/user" method="patch" th:object="${user}">
+                <div class="form-group">
+                    <label for="inputFirstName">First name</label>
+                    <input type="text" class="form-control" id="inputFirstName" name="firstName"
+                           placeholder="Enter first name" th:field="*{firstName}"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputLastName">Last name</label>
+                    <input type="text" class="form-control" id="inputLastName" name="lastName"
+                           placeholder="Enter last name" th:field="*{lastName}"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail">Email address</label>
+                    <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" name="email"
+                           placeholder="Enter email" th:field="*{email}"/>
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password" th:field="*{password}"/>
+                </div>
+                <div class="form-group">
+                    <label for="info">Additional information</label>
+                    <input type="text" class="form-control" id="info" name="description" placeholder="Tell us something about you..." th:field="*{description}"/>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <h4>Posts for which you applied:</h4>
+        <table id="myTableId">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${posts}">
+                <td th:text="${post.id}" ></td>
+                <td th:text="${post.title}" ></td>
+                <td th:text="${post.description}" ></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript"
+        src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div class="footer"><b>&copy; 2018 ZuzSeb</b></div>
+
+</body>
+</html>

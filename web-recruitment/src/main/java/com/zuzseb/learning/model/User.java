@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "USER")
@@ -24,6 +25,21 @@ public class User {
     private String password;
     @Column(name = "description")
     private String description;
+    @OneToMany(mappedBy = "user")
+    private Set<Post> posts;
+
+    public void addPost(Post newPost) {
+        newPost.setUser(this);
+        posts.add(newPost);
+    }
+
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
+    }
 
     public User() {
     }

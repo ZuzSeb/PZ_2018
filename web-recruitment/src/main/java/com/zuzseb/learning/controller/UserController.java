@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Map;
@@ -20,7 +21,7 @@ public class UserController {
     @Autowired
     private ConfigurationService configurationService;
 
-    @PostMapping("/user")
+    @PostMapping("/users")
     public String createUser(@ModelAttribute("user") User user, Map<String, Object> model) {
         System.out.println("User: " + user);
         if (userService.isEmailTaken(user.getEmail())) {
@@ -31,6 +32,14 @@ public class UserController {
             model.put("infoMessage", configurationService.getUserSuccessfullyCreatedText());
             return "info/success";
         }
+    }
+
+    @GetMapping("/profiles")
+    public String getProfile(Map<String, Object> model) {
+        User foundUser = userService.findByLogin("aaa@aa");
+        model.put("user", foundUser);
+        model.put("posts", foundUser.getPosts());
+        return "profile";
     }
 
     @GetMapping("/log-in")

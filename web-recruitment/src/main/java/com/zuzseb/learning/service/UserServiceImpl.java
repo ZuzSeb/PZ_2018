@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Repository
 public class UserServiceImpl implements UserService {
@@ -28,5 +30,12 @@ public class UserServiceImpl implements UserService {
         Query query = em.createQuery("select u from User u where u.email = :email");
         query.setParameter("email", email);
         return !query.getResultList().isEmpty();
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        TypedQuery<User> query = em.createQuery("select u from User u where u.email = :email", User.class);
+        query.setParameter("email", login);
+        return query.getSingleResult();
     }
 }
