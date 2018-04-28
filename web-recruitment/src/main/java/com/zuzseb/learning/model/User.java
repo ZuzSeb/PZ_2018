@@ -25,11 +25,11 @@ public class User {
     private String password;
     @Column(name = "description")
     private String description;
-    @OneToMany(mappedBy = "user")
+    @OneToMany
+    @JoinTable(name = "post_user")
     private Set<Post> posts;
 
     public void addPost(Post newPost) {
-        newPost.setUser(this);
         posts.add(newPost);
     }
 

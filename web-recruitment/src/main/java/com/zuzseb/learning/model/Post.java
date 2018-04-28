@@ -16,20 +16,8 @@ public class Post {
     private String id;
     @Column(name = "title")
     private String title;
-    @Column(name = "description")
+    @Column(name = "description", length = 4000)
     private String description;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        user.addPost(this);
-        this.user = user;
-    }
 
     public Post() {
     }

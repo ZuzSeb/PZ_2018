@@ -29,16 +29,12 @@
 </nav>
 
 <div class="container">
-    <th:block th:each="post : ${posts}">
-        <!--<td th:utext="${post.id}"></td><br/>-->
-        <td th:utext="${post.title}"></td><br/>
-        <td th:utext="${post.description}"></td><br/>
-        <a th:href="@{/post(id=${post.id})}">More...</a>
-        <br/>
-        <br/>
-        <br/>
-    </th:block>
+    <td th:utext="${post.title}"></td><br/>
+    <td th:utext="${post.description}"></td><br/>
+    <button th:text="Aplikuj"></button>
+
 </div>
+
 <!-- /.container -->
 
 <script type="text/javascript"

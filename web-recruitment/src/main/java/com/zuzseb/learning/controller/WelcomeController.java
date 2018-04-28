@@ -6,10 +6,7 @@ import com.zuzseb.learning.repository.PostRepository;
 import com.zuzseb.learning.service.LogIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -67,4 +64,12 @@ public class WelcomeController {
         model.put("posts", posts);
 	    return "all-posts";
     }
+
+    @GetMapping("/post")
+//	@RequestMapping(value="/post", method = RequestMethod.GET)
+	public String getPost(@RequestParam("id") String itemid, Map<String,Object> model){
+		Post post = postRepository.findOne(itemid);
+		model.put("post", post);
+		return "post";
+	}
 }
