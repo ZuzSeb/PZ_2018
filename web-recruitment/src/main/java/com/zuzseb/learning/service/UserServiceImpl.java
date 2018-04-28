@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByLogin(String login) {
-        TypedQuery<User> query = em.createQuery("select u from User u where u.email = :email", User.class);
-        query.setParameter("email", login);
+        TypedQuery<User> query = em.createQuery("select u from User u where u.login = :login", User.class);
+        query.setParameter("login", login);
         return query.getSingleResult();
     }
 }

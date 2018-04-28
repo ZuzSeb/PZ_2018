@@ -26,7 +26,7 @@
 </nav>
 
 <div class="rounded-div-outer">
-    <form action="/user" method="post">
+    <form action="/users" method="post">
         <div class="form-group">
             <label for="inputFirstName">First name</label>
             <input type="text" class="form-control" id="inputFirstName" name="firstName"
@@ -36,6 +36,11 @@
             <label for="inputLastName">Last name</label>
             <input type="text" class="form-control" id="inputLastName" name="lastName"
                    placeholder="Enter last name"/>
+        </div>
+        <div class="form-group">
+            <label for="inputLogin">Last name</label>
+            <input type="text" class="form-control" id="inputLogin" name="login"
+                   placeholder="Enter login"/>
         </div>
         <div class="form-group">
             <label for="inputEmail">Email address</label>
@@ -49,7 +54,7 @@
         </div>
         <div class="form-group">
             <label for="info">Additional information</label>
-            <input type="password" class="form-control" id="info" name="description" placeholder="Tell us something about you..."/>
+            <input type="text" class="form-control" id="info" name="description" placeholder="Tell us something about you..."/>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

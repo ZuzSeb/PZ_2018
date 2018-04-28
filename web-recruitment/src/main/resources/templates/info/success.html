@@ -21,6 +21,9 @@
         <ul class="nav navbar-nav navbar-left">
             <li class="active"><a href="#">Home</a></li>
         </ul>
+        <ul class="nav navbar-nav navbar-left">
+            <li><a href="/profiles/{login}" th:href="@{/profiles/{login}(login=${session.username})}">Profile</a></li>
+        </ul>
     </div>
 </nav>
 
