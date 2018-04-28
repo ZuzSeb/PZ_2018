@@ -1,14 +1,13 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml"
-      xmlns:modelAttribute="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Profile</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link rel="stylesheet" type="text/css"
-          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+          th:href="@{~/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
 
-    <link rel="stylesheet" th:href="@{/css/main.css}"
+    <link rel="stylesheet" th:href="@{~/css/main.css}"
           href="../../css/main.css"/>
 
 </head>
@@ -62,16 +61,16 @@
         <table id="myTableId">
             <thead>
             <tr>
-                <th>Id</th>
                 <th>Title</th>
                 <th>Description</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="post : ${posts}">
-                <td th:text="${post.id}" ></td>
                 <td th:text="${post.title}" ></td>
                 <td th:text="${post.description}" ></td>
+                <td><a th:href="@{/profile/delete-user-post}">Delete from list</a></td>
             </tr>
             </tbody>
         </table>
@@ -82,7 +81,7 @@
 
 
 <script type="text/javascript"
-        src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        th:href="@{~/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 
 <div class="footer"><b>&copy; 2018 ZuzSeb</b></div>
 
