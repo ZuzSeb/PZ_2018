@@ -1,6 +1,5 @@
 package com.zuzseb.learning.controller;
 
-import com.zuzseb.learning.configuration.ConfigurationService;
 import com.zuzseb.learning.model.Login;
 import com.zuzseb.learning.model.User;
 import com.zuzseb.learning.service.UserService;
@@ -21,9 +20,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private ConfigurationService configurationService;
-
     @PostMapping("/users")
     public String createUser(@ModelAttribute("user") User user, HttpServletRequest request, HttpSession session, Map<String, Object> model) {
         LOGGER.info("POST /users, User: {}", user);
@@ -35,23 +31,20 @@ public class UserController {
         } else {
             userService.save(user);
             newSession.setAttribute("username", user.getLogin());
-            model.put("infoMessage", configurationService.getUserSuccessfullyCreatedText());
+            model.put("infoMessage", "User successfully created.");
             return "info/success";
         }
     }
 
     @PatchMapping("/users")
-    public String updateUser(@ModelAttribute("user") User user, HttpServletRequest request, HttpSession session, Map<String, Object> model) {
+    public String updateUser(@ModelAttribute("user") User user, Map<String, Object> model) {
         LOGGER.info("PATCH /users, User: {}", user);
-        session.invalidate();
-        HttpSession newSession = request.getSession();
         Optional<User> updatedUser = userService.update(user);
         if (updatedUser.isPresent()) {
-            newSession.setAttribute("username", user.getLogin());
-            model.put("infoMessage", configurationService.getUserSuccessfullyCreatedText());
+            model.put("infoMessage", "User successfully updated.");
             return "info/success";
         } else {
-            model.put("infoMessage", "User with this email already exists!!!");
+            model.put("infoMessage", "We're sorry. Something went wrong.");
             return "info/error";
         }
     }
@@ -65,7 +58,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(Login login, HttpServletRequest request, HttpSession session, Map<String, Object> model) {
+    public String login(Login login, HttpServletRequest request, HttpSession session) {
         session.invalidate();
         HttpSession newSession;
         if (userService.authenticate(login)) {
@@ -78,7 +71,7 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session, Map<String, Object> model) {
+    public String logout(HttpSession session) {
         session.invalidate();
         return "welcome";
     }

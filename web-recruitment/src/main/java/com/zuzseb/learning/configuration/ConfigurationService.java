@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ConfigurationService {
 
-	// inject via application.properties
+	/*// inject via application.properties
 	@Value("${welcome.message:test}")
 	private String message;
 
@@ -19,5 +19,5 @@ public class ConfigurationService {
 
 	public String getUserSuccessfullyCreatedText() {
 		return userSuccessfullyCreatedText;
-	}
+	}*/
 }

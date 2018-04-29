@@ -19,31 +19,39 @@ public class User {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "id")
     private String id;
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
-    @Column(name = "login")
+    @Column(name = "login", unique = true)
     private String login;
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "description")
     private String description;
     @OneToMany
     @JoinTable(name = "post_user")
     private Set<Post> posts;
-    @Transient
-    private String _method;
+//    @Transient
+//    private String _method;
 
-    public String get_method() {
-        return _method;
+    public String getId() {
+        return id;
     }
 
-    public void set_method(String _method) {
-        this._method = _method;
+    public void setId(String id) {
+        this.id = id;
     }
+
+//    public String get_method() {
+//        return _method;
+//    }
+//
+//    public void set_method(String _method) {
+//        this._method = _method;
+//    }
 
     public String getLogin() {
         return login;
@@ -117,24 +125,16 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(login, user.login) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(description, user.description) &&
-                Objects.equals(posts, user.posts);
-    }
-
-    @Override
     public int hashCode() {
-
-        return Objects.hash(id, firstName, lastName, login, email, password, description, posts);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (posts != null ? posts.hashCode() : 0);
+        return result;
     }
 
     @Override

@@ -12,4 +12,5 @@ public interface UserService {
     User findByLogin(String login);
     boolean authenticate(Login login);
     Optional<User> getUserByLogin(String login);
+    Optional<User> getUserByEmail(String login);
 }
