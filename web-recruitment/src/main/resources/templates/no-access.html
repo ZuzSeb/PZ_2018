@@ -1,44 +1,44 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Simple Demo Page</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Simple Demo Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-<link rel="stylesheet" type="text/css"
-	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css"
+          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
 
-<link rel="stylesheet" th:href="@{/css/main.css}"
-	href="../../css/main.css" />
+    <link rel="stylesheet" th:href="@{/css/main.css}"
+          href="../../css/main.css"/>
 
 </head>
 <body>
 
-	<nav class="navbar navbar-inverse">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="/log-in">Log In</a>
-			</div>
-			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="/">Home</a></li>
-					<li><a href="/">About</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+<nav class="navbar navbar-default">
+    <div class="navbar-collapse collapse">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Web recruitment</a>
+        </div>
+        <ul class="nav navbar-nav navbar-left">
+            <li><a href="/">Home</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/login-page"><b><p class="logIn">Log In</p></b></a></li>
+        </ul>
+    </div>
+</nav>
 
-	<div class="container">
+<div class="container">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">No access</div>
-			<div class="panel-body">Please, if you think you need an access to this site then contact the admin.</div>
-		</div>
+    <div class="panel panel-default">
+        <div class="panel-heading">No access</div>
+        <div class="panel-body">Please, if you think you need an access to this site then contact the admin.</div>
+    </div>
 
-	</div>
-	<!-- /.container -->
+</div>
+<!-- /.container -->
 
-	<script type="text/javascript"
-		src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
 </html>

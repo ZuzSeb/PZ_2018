@@ -1,6 +1,7 @@
 package com.zuzseb.learning.controller;
 
 import com.zuzseb.learning.configuration.ConfigurationService;
+import com.zuzseb.learning.model.Login;
 import com.zuzseb.learning.model.User;
 import com.zuzseb.learning.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +48,22 @@ public class UserController {
         return "profile";
     }
 
-    @GetMapping("/log-in")
-    public String logIn() {
-        return "/";
+    @PostMapping("/login")
+    public String login(Login login, HttpServletRequest request, HttpSession session, Map<String, Object> model) {
+        session.invalidate();
+        HttpSession newSession;
+        if (userService.authenticate(login)) {
+            newSession = request.getSession();
+            newSession.setAttribute("username", login.getLogin());
+            return "welcome";
+        } else {
+            return "no-access";
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session, Map<String, Object> model) {
+        session.invalidate();
+        return "welcome";
     }
 }

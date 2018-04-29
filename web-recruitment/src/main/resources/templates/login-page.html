@@ -16,10 +16,10 @@
 <nav class="navbar navbar-default">
     <div class="navbar-collapse collapse">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Web recruitment</a>
+            <a class="navbar-brand" href="/">Web recruitment</a>
         </div>
         <ul class="nav navbar-nav navbar-left">
-            <li class="active"><a href="#">Home</a></li>
+            <li><a href="/">Home</a></li>
         </ul>
     </div>
 </nav>
@@ -28,12 +28,12 @@
 
     <h2>Log In</h2>
 
-    <form class="form-horizontal" method="get" action="/log-in">
+    <form class="form-horizontal" method="post" action="/login">
         <div class="form-group">
-            <label class="control-label col-sm-2" for="email">Email:</label>
+            <label class="control-label col-sm-2" for="login">Login:</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="email"
-                       placeholder="Enter email" name="email"/>
+                <input type="text" class="form-control" id="login"
+                       placeholder="Enter login" name="login"/>
             </div>
         </div>
         <div class="form-group">
