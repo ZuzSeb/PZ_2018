@@ -16,10 +16,16 @@
 <nav class="navbar navbar-default">
     <div class="navbar-collapse collapse">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Web recruitment</a>
+            <a class="navbar-brand" href="/">Web recruitment</a>
         </div>
         <ul class="nav navbar-nav navbar-left">
-            <li class="active"><a href="#">Home</a></li>
+            <li><a href="/">Home</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-left">
+            <li class="active"><a>Profile</a></li>
+        </ul>
+        <ul th:if="${session.username != null}" class="nav navbar-nav navbar-right">
+            <li><a href="/logout"><b><p class="logIn">Log out</p></b></a></li>
         </ul>
     </div>
 </nav>

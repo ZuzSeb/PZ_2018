@@ -8,6 +8,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "USER")
+@NamedQueries({
+        @NamedQuery(name = "getUserByLogin", query = "select u from User u where u.login = :login")
+})
 public class User {
 
     @Id

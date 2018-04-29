@@ -21,8 +21,14 @@
 		<ul class="nav navbar-nav navbar-left">
 			<li class="active"><a href="#">Home</a></li>
 		</ul>
-		<ul class="nav navbar-nav navbar-right">
+		<ul th:if="${session.username != null}" class="nav navbar-nav navbar-left">
+			<li><a href="/profiles/{login}" th:href="@{/profiles/{login}(login=${session.username})}">Profile</a></li>
+		</ul>
+		<ul th:if="${session.username == null}" class="nav navbar-nav navbar-right">
 			<li><a href="/login-page"><b><p class="logIn">Log In</p></b></a></li>
+		</ul>
+		<ul th:if="${session.username != null}" class="nav navbar-nav navbar-right">
+			<li><a href="/logout"><b><p class="logIn">Log out</p></b></a></li>
 		</ul>
 	</div>
 </nav>
