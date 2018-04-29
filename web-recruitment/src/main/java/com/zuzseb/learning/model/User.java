@@ -9,7 +9,8 @@ import java.util.Set;
 @Entity
 @Table(name = "USER")
 @NamedQueries({
-        @NamedQuery(name = "getUserByLogin", query = "select u from User u where u.login = :login")
+        @NamedQuery(name = "getUserByLogin", query = "select u from User u where u.login = :login"),
+        @NamedQuery(name = "getUserByEmail", query = "select u from User u where u.email = :email")
 })
 public class User {
 
@@ -33,6 +34,16 @@ public class User {
     @OneToMany
     @JoinTable(name = "post_user")
     private Set<Post> posts;
+    @Transient
+    private String _method;
+
+    public String get_method() {
+        return _method;
+    }
+
+    public void set_method(String _method) {
+        this._method = _method;
+    }
 
     public String getLogin() {
         return login;

@@ -33,7 +33,8 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="rounded-div-outer">
-            <form action="/user" method="patch" th:object="${user}">
+            <form action="/users" method="post" th:object="${user}">
+                <input type="hidden" name="_method" value="patch" />
                 <div class="form-group">
                     <label for="inputFirstName">First name</label>
                     <input type="text" class="form-control" id="inputFirstName" name="firstName"
@@ -43,6 +44,11 @@
                     <label for="inputLastName">Last name</label>
                     <input type="text" class="form-control" id="inputLastName" name="lastName"
                            placeholder="Enter last name" th:field="*{lastName}"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputLogin">Login</label>
+                    <input type="text" class="form-control" id="inputLogin" name="login"
+                           placeholder="Enter login" th:field="*{login}" readonly="true"/>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail">Email address</label>
@@ -58,7 +64,7 @@
                     <label for="info">Additional information</label>
                     <input type="text" class="form-control" id="info" name="description" placeholder="Tell us something about you..." th:field="*{description}"/>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Modify data</button>
             </form>
         </div>
     </div>

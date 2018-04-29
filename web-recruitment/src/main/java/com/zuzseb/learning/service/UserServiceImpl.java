@@ -3,7 +3,8 @@ package com.zuzseb.learning.service;
 import com.zuzseb.learning.model.Login;
 import com.zuzseb.learning.model.User;
 import com.zuzseb.learning.repository.UserRepository;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 @Repository
 public class UserServiceImpl implements UserService {
-    private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
     @PersistenceContext
     private EntityManager em;
 
@@ -25,6 +26,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public Optional<User> update(User user) {
+        Optional<User> oldUser = getUserByLogin(user.getLogin());
+        if (oldUser.isPresent()) {
+            User foundUser = em.createNamedQuery("getUserByEmail", User.class).setParameter("email", user.getEmail()).getSingleResult();
+            if (foundUser.getEmail().equals(oldUser.get().getEmail())) {
+                try {
+                    return Optional.of(em.merge(user));
+                } catch (Exception e) {
+                    LOGGER.warn(getClass().getSimpleName() + "#update()", e);
+                }
+            } else {
+                LOGGER.info("User {} was not updated because of inconsistency in database.", user.getEmail());
+                return Optional.empty();
+            }
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -56,4 +76,6 @@ public class UserServiceImpl implements UserService {
         }
         return Optional.empty();
     }
+
+
 }
