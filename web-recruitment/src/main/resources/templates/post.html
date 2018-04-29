@@ -28,9 +28,17 @@
     </div>
 </nav>
 
+
+
 <div class="container">
+    <a href="/all-posts">Go back to post list</a>
+    <br/><br/>
+    <td th:utext="${post.profession}"></td><br/>
     <td th:utext="${post.title}"></td><br/>
+    <td th:utext="${post.company}"></td><br/>
     <td th:utext="${post.description}"></td><br/>
+    <td th:utext="${post.contact}"></td><br/>
+    <br/><br/>
     <button th:text="Aplikuj"></button>
 
 </div>

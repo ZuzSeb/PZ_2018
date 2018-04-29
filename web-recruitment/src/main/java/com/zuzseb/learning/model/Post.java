@@ -1,6 +1,5 @@
 package com.zuzseb.learning.model;
 
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -10,24 +9,33 @@ import java.util.Objects;
 public class Post {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GenericGenerator(name = "POST_GEN_SEQ", strategy = "POST_SEQ")
     @Column(name = "id")
-    private String id;
+    private Long id;
     @Column(name = "title")
     private String title;
     @Column(name = "description", length = 4000)
     private String description;
+    @Column(name = "company")
+    private String company;
+    @Column(name = "profession")
+    private String profession;
+    @Column(name = "contact")
+    private String contact;
 
     public Post() {
     }
 
-    public Post(String title, String description) {
+    public Post(String title, String description, String company, String profession, String contact) {
         this.title = title;
         this.description = description;
+        this.company = company;
+        this.profession = profession;
+        this.contact = contact;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -46,6 +54,32 @@ public class Post {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
