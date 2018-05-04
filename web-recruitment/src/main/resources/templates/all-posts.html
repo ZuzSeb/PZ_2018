@@ -6,10 +6,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link rel="stylesheet" type="text/css"
-          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+          th:href="@{~/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
 
-    <link rel="stylesheet" th:href="@{/css/main.css}"
-          href="../static/css/main.css"/>
+    <link rel="stylesheet" th:href="@{~/css/main.css}"
+          href="../../css/main.css"/>
 
 </head>
 <body>
@@ -32,7 +32,7 @@
         <td th:utext="${post.title}"></td><br/>
         <td th:utext="${post.company}"></td><br/>
         <td th:utext="${post.description}"></td><br/>
-        <a th:href="@{/post(id=${post.id})}">More...</a>
+        <a th:href="@{/posts/{postId}(postId=${post.id})}">More...</a>
         <br/>
         <td class="separator" th:text="--------------------------------------------------------------------------------------------------" ></td>
         <br/>
@@ -66,7 +66,7 @@
 </div>
 
 <script type="text/javascript"
-        src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        th:href="@{~/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 
 <div class="footer"><b>&copy; 2018 ZuzSeb</b></div>
 </body>

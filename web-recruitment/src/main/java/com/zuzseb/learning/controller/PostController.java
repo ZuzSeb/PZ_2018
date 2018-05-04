@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
@@ -48,10 +49,10 @@ public class PostController {
 		return "all-posts";
     }
 
-	@GetMapping("/post")
-	public String getPost(@RequestParam("id") Long itemid, Map<String,Object> model){
-		Post post = postRepository.findOne(itemid);
-		LOGGER.info("/post id = {}", post.getId());
+	@GetMapping("/posts/{postId}")
+	public String getPost(@PathVariable("postId") Long postId, Map<String,Object> model){
+		LOGGER.info("/posts/{}", postId);
+		Post post = postRepository.findOne(postId);
 		model.put("post", post);
 		return "post";
 	}
