@@ -5,9 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link rel="stylesheet" type="text/css"
-          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+          th:href="@{~/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
 
-    <link rel="stylesheet" th:href="@{/css/main.css}"
+    <link rel="stylesheet" th:href="@{~/css/main.css}"
           href="../../css/main.css"/>
 
 </head>
@@ -16,13 +16,19 @@
 <nav class="navbar navbar-default">
     <div class="navbar-collapse collapse">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">Web recruitment</a>
+            <a class="navbar-brand" href="#">Web recruitment</a>
         </div>
         <ul class="nav navbar-nav navbar-left">
-            <li><a href="/">Home</a></li>
+            <li class="active"><a href="#">Home</a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-left">
+        <ul th:if="${session.username != null}" class="nav navbar-nav navbar-left">
             <li><a href="/profiles/{login}" th:href="@{/profiles/{login}(login=${session.username})}">Profile</a></li>
+        </ul>
+        <ul th:if="${session.username == null}" class="nav navbar-nav navbar-right">
+            <li><a href="/login-page"><b><p class="logIn">Log In</p></b></a></li>
+        </ul>
+        <ul th:if="${session.username != null}" class="nav navbar-nav navbar-right">
+            <li><a href="/logout"><b><p class="logIn">Log out</p></b></a></li>
         </ul>
     </div>
 </nav>
@@ -34,7 +40,7 @@
 </div>
 
 <script type="text/javascript"
-        src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        th:href="@{~/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 
 <div class="footer"><b>&copy; 2018 ZuzSeb</b></div>
 

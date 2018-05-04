@@ -1,6 +1,10 @@
 package com.zuzseb.learning.controller;
 
+import com.zuzseb.learning.exception.ComparisonPasswordException;
+import com.zuzseb.learning.exception.UserNotFoundException;
+import com.zuzseb.learning.exception.WrongActualPasswordException;
 import com.zuzseb.learning.model.Login;
+import com.zuzseb.learning.model.PwdChange;
 import com.zuzseb.learning.model.User;
 import com.zuzseb.learning.service.UserService;
 import org.slf4j.Logger;
@@ -47,6 +51,25 @@ public class UserController {
             model.put("infoMessage", "We're sorry. Something went wrong.");
             return "info/error";
         }
+    }
+
+    @PatchMapping("/users/{login}/pwd")
+    public String changePassword(@PathVariable("login") String login, PwdChange pwdChange, Map<String, Object> model) {
+        LOGGER.info("PATCH /users/{}/pwd", login);
+        try {
+            userService.changePwd(login, pwdChange);
+        } catch (WrongActualPasswordException e) {
+            model.put("infoMessage", "Wrong actual password. Forgot password? Please contact administrator.");
+            return "info/error";
+        } catch (ComparisonPasswordException e) {
+            model.put("infoMessage", "Retyped new password is not the same as original.");
+            return "info/error";
+        } catch (UserNotFoundException e) {
+           model.put("infoMessage", "User fas not found.");
+           return "info/error";
+        }
+        model.put("infoMessage", "Password successfully changed.");
+        return "info/success";
     }
 
     @GetMapping("/profiles/{login}")

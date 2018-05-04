@@ -1,6 +1,10 @@
 package com.zuzseb.learning.service;
 
+import com.zuzseb.learning.exception.ComparisonPasswordException;
+import com.zuzseb.learning.exception.UserNotFoundException;
+import com.zuzseb.learning.exception.WrongActualPasswordException;
 import com.zuzseb.learning.model.Login;
+import com.zuzseb.learning.model.PwdChange;
 import com.zuzseb.learning.model.User;
 import com.zuzseb.learning.repository.UserRepository;
 import org.slf4j.Logger;
@@ -94,6 +98,25 @@ public class UserServiceImpl implements UserService {
             LOGGER.warn(getClass().getSimpleName() + "#getUserByEmail() method failed.", e);
         }
         return Optional.empty();
+    }
+
+    @Override
+    @Transactional
+    public void changePwd(String login, PwdChange pwdChange) throws WrongActualPasswordException, ComparisonPasswordException, UserNotFoundException {
+        Optional<User> foundUser = getUserByLogin(login);
+        if (foundUser.isPresent()) {
+            User user = foundUser.get();
+            if (!pwdChange.getNewPwd().equals(pwdChange.getNewPwd2())) {
+                throw new ComparisonPasswordException("New password field do not match retype new password field.");
+            }
+            if (!user.getPassword().equals(pwdChange.getOldPwd())) {
+                throw new WrongActualPasswordException(String.format("Wrong password for user: %s.", login));
+            }
+            user.setPassword(pwdChange.getNewPwd());
+            em.merge(user);
+        } else {
+            throw new UserNotFoundException(String.format("User [%s] not found.", login));
+        }
     }
 
 }

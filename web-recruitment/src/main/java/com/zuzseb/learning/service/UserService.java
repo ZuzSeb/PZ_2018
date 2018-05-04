@@ -1,6 +1,10 @@
 package com.zuzseb.learning.service;
 
+import com.zuzseb.learning.exception.ComparisonPasswordException;
+import com.zuzseb.learning.exception.UserNotFoundException;
+import com.zuzseb.learning.exception.WrongActualPasswordException;
 import com.zuzseb.learning.model.Login;
+import com.zuzseb.learning.model.PwdChange;
 import com.zuzseb.learning.model.User;
 
 import java.util.Optional;
@@ -13,4 +17,5 @@ public interface UserService {
     boolean authenticate(Login login);
     Optional<User> getUserByLogin(String login);
     Optional<User> getUserByEmail(String login);
+    void changePwd(String login, PwdChange pwdChange) throws WrongActualPasswordException, ComparisonPasswordException, UserNotFoundException;
 }

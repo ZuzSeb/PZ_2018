@@ -29,7 +29,6 @@ public class WelcomeController {
     }
 
     @GetMapping("/post")
-//	@RequestMapping(value="/post", method = RequestMethod.GET)
 	public String getPost(@RequestParam("id") String itemid, Map<String,Object> model){
 		Post post = postRepository.findOne(itemid);
 		model.put("post", post);
