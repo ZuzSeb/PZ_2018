@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:p="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Simple Demo Page</title>
@@ -9,7 +9,7 @@
           href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
 
     <link rel="stylesheet" th:href="@{/css/main.css}"
-          href="../../css/main.css"/>
+          href="../static/css/main.css"/>
 
 </head>
 <body>
@@ -29,16 +29,41 @@
 
 <div class="container">
     <th:block th:each="post : ${posts}">
-        <!--<td th:utext="${post.id}"></td><br/>-->
         <td th:utext="${post.title}"></td><br/>
+        <td th:utext="${post.company}"></td><br/>
         <td th:utext="${post.description}"></td><br/>
         <a th:href="@{/post(id=${post.id})}">More...</a>
         <br/>
+        <td class="separator" th:text="--------------------------------------------------------------------------------------------------" ></td>
         <br/>
         <br/>
     </th:block>
+    <div class="row">
+        <div th:if="${posts.totalPages != 1}" class="form-group col-md-11 pagination-centered">
+            <ul class="pagination">
+                <li th:class="${posts.number == 0} ? disabled">
+                    <a class="pageLink" th:href="@{/all-posts(pageSize=${selectedPageSize}, page=1)}">&laquo;</a>
+                </li>
+                <li th:class="${posts.number == 0} ? disabled">
+                    <a class="pageLink" th:href="@{/all-posts(pageSize=${selectedPageSize}, page=${posts.number})}">&larr;</a>
+                </li>
+                <li th:class="${posts.number == (page - 1)} ? 'active pointer-disabled'"
+                    th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                    <a class="pageLink" th:href="@{/all-posts(pageSize=${selectedPageSize}, page=${page})}"
+                       th:text="${page}"></a>
+                </li>
+                <li th:class="${posts.number + 1 == posts.totalPages} ? disabled">
+                    <a class="pageLink"
+                       th:href="@{/all-posts(pageSize=${selectedPageSize}, page=${posts.number + 2})}">&rarr;</a>
+                </li>
+                <li th:class="${posts.number + 1 == posts.totalPages} ? disabled">
+                    <a class="pageLink"
+                       th:href="@{/all-posts(pageSize=${selectedPageSize}, page=${posts.totalPages})}">&raquo;</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
-<!-- /.container -->
 
 <script type="text/javascript"
         src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>

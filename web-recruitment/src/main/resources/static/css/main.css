@@ -16,6 +16,12 @@ table, th, td {
     padding: 10px;
 }
 
+separator {
+    border-radius: 25px;
+    border: 2px solid #7FFF00;
+    padding: 10px;
+}
+
 div.rounded-div-outer {
 	border: 2px solid #7FFF00;
 	border-radius: 10px;
