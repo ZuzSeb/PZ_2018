@@ -1,97 +1,36 @@
 package com.zuzseb.learning.controller;
 
-<<<<<<< HEAD
-import com.zuzseb.learning.configuration.ConfigurationService;
 import com.zuzseb.learning.model.PagerModel;
 import com.zuzseb.learning.model.Post;
 import com.zuzseb.learning.repository.PostRepository;
-import com.zuzseb.learning.service.LogIn;
 import com.zuzseb.learning.utils.StringUtils;
-=======
-import com.zuzseb.learning.model.Post;
-import com.zuzseb.learning.repository.PostRepository;
->>>>>>> f1bbef5beea7258a3833ff4c1c84930a771e2980
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-<<<<<<< HEAD
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
-=======
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
->>>>>>> f1bbef5beea7258a3833ff4c1c84930a771e2980
 import java.util.Map;
 import java.util.Optional;
 
 @Controller
-public class WelcomeController {
-<<<<<<< HEAD
+public class PostController {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(PostController.class);
 
 	private static final int BUTTONS_TO_SHOW = 3;
 	private static final int INITIAL_PAGE = 0;
 	private static final int INITIAL_PAGE_SIZE = 5;
 	private static final int[] PAGE_SIZES = { 5, 10, 20};
 
-	
-	@Autowired
-	private ConfigurationService configurationService;
-
 	@Autowired
     private PostRepository postRepository;
 
-	@Autowired
-	private LogIn logIn;
-
-
-=======
-	@Autowired
-    private PostRepository postRepository;
-
->>>>>>> f1bbef5beea7258a3833ff4c1c84930a771e2980
-	@RequestMapping("/welcome")
-	public String welcome() {
-		return "welcome";
-	}
-<<<<<<< HEAD
-
-	@RequestMapping("/about")
-	public String about(Map<String, Object> model) {
-		model.put("message", configurationService.getMessage());
-		model.put("cat", "Cat");
-		return "about";
-	}
-
-	@RequestMapping("/log-out")
-	public String logInPage() {
-		return "log-in";
-	}
-
-	@RequestMapping(value = "/authorization", method = RequestMethod.GET)
-	public String logIn(@RequestParam("email") String email, @RequestParam("pwd") String pwd, Map<String, Object> model) {
-		model.put("message", Arrays.asList(email.split("@")).get(0));
-		return (logIn.checkCredencials(email, pwd)) ? "welcome" : "no-access";
-	}
-
-	@RequestMapping("/adding-pet")
-	public String addingPetPage() {
-		return "adding-pet";
-	}
-
-	@RequestMapping("/listing-all-pets")
-	public String listigAllPetsPage() {
-		return "listing-all-pets";
-	}
-
-=======
-	
->>>>>>> f1bbef5beea7258a3833ff4c1c84930a771e2980
 	@GetMapping("/all-posts")
     public String showAllPosts(@RequestParam("pageSize") Optional<Integer> pageSize,
 							   @RequestParam("page") Optional<Integer> page,
@@ -112,6 +51,7 @@ public class WelcomeController {
 	@GetMapping("/post")
 	public String getPost(@RequestParam("id") Long itemid, Map<String,Object> model){
 		Post post = postRepository.findOne(itemid);
+		LOGGER.info("/post id = {}", post.getId());
 		model.put("post", post);
 		return "post";
 	}
