@@ -15,6 +15,7 @@
 <body>
 <div th:replace="menu :: copy"></div>
 
+
 <div class="container">
     <a href="/all-posts">Go back to post list</a>
     <br/><br/>
@@ -24,9 +25,15 @@
     <td th:utext="${post.description}"></td><br/>
     <td th:utext="${post.contact}"></td><br/>
     <br/><br/>
-    <button th:text="Aplikuj"></button>
+
+    <a href="/upload">Aplikuj </a>
+    <!--<td>-->
+        <!--<a th:href="/upload"><span>Aplikuj</span></a>-->
+    <!--</td>-->
 
 </div>
+<!--<button data-toggle="collapse" data-target="#demo">click</button>-->
+
 
 <!-- /.container -->
 

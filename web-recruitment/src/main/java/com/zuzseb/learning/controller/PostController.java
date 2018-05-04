@@ -56,4 +56,6 @@ public class PostController {
 		model.put("post", post);
 		return "post";
 	}
+
+
 }

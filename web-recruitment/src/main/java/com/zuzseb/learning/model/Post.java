@@ -10,7 +10,6 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-//    @GenericGenerator(name = "POST_GEN_SEQ", strategy = "POST_SEQ")
     @Column(name = "id")
     private Long id;
     @Column(name = "title")
@@ -78,8 +77,6 @@ public class Post {
     public void setContact(String contact) {
         this.contact = contact;
     }
-
-
 
     @Override
     public boolean equals(Object o) {

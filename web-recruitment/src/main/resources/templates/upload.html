@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:p="http://www.w3.org/1999/html">
+
+<head>
+    <title>Simple Demo Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css"
+          th:href="@{~/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+
+    <link rel="stylesheet" th:href="@{~/css/main.css}"
+          href="../../css/main.css"/>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Log out</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li class="active"><a href="/about.html">About</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+<div class="container">
+    <form method="post" enctype="multipart/form-data" action="/upload">
+        <table>
+            <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+            <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+        </table>
+    </form>
+</div>
+<!--<button data-toggle="collapse" data-target="#demo">click</button>-->
+
+
+<!-- /.container -->
+
+<script type="text/javascript"
+        th:href="@{~/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+<div class="footer"><b>&copy; 2018 ZuzSeb</b></div>
+</body>
+</html>
