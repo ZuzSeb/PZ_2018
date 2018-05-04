@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,20 +30,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Optional<User> update(User user) {
-        Optional<User> oldUser = getUserByLogin(user.getLogin());
-        if (oldUser.isPresent()) {
-            User foundUser = em.createNamedQuery("getUserByEmail", User.class).setParameter("email", user.getEmail()).getSingleResult();
-            if (foundUser.getEmail().equals(oldUser.get().getEmail())) {
-                try {
+        try {
+            Optional<User> oldUser = getUserByLogin(user.getLogin());
+            if (oldUser.isPresent()) {
+                Optional<User> foundUser = getUserByEmail(user.getEmail());
+                if (foundUser.isPresent()) {
+                    if (foundUser.get().getLogin().equals(oldUser.get().getLogin())) {
+                        oldUser.get().setFirstName(user.getFirstName());
+                        oldUser.get().setLastName(user.getLastName());
+                        oldUser.get().setEmail(user.getEmail());
+                        oldUser.get().setDescription(user.getDescription());
+                        return Optional.of(em.merge(oldUser.get()));
+                    }
+                } else {
                     return Optional.of(em.merge(user));
-                } catch (Exception e) {
-                    LOGGER.warn(getClass().getSimpleName() + "#update()", e);
                 }
             } else {
-                LOGGER.info("User {} was not updated because of inconsistency in database.", user.getEmail());
-                return Optional.empty();
+                LOGGER.warn("Error: trying to update user which does not exist.");
             }
+        } catch (Exception e) {
+            LOGGER.warn(getClass().getSimpleName() + "#update()", e);
         }
         return Optional.empty();
     }
@@ -77,5 +86,14 @@ public class UserServiceImpl implements UserService {
         return Optional.empty();
     }
 
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        try {
+            return Optional.of(em.createNamedQuery("getUserByEmail", User.class).setParameter("email", email).getSingleResult());
+        } catch (Exception e) {
+            LOGGER.warn(getClass().getSimpleName() + "#getUserByEmail() method failed.", e);
+        }
+        return Optional.empty();
+    }
 
 }

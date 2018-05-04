@@ -1,24 +1,38 @@
 package com.zuzseb.learning.controller;
 
+<<<<<<< HEAD
 import com.zuzseb.learning.configuration.ConfigurationService;
 import com.zuzseb.learning.model.PagerModel;
 import com.zuzseb.learning.model.Post;
 import com.zuzseb.learning.repository.PostRepository;
 import com.zuzseb.learning.service.LogIn;
 import com.zuzseb.learning.utils.StringUtils;
+=======
+import com.zuzseb.learning.model.Post;
+import com.zuzseb.learning.repository.PostRepository;
+>>>>>>> f1bbef5beea7258a3833ff4c1c84930a771e2980
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
+=======
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+>>>>>>> f1bbef5beea7258a3833ff4c1c84930a771e2980
 import java.util.Map;
 import java.util.Optional;
 
 @Controller
 public class WelcomeController {
+<<<<<<< HEAD
 
 	private static final int BUTTONS_TO_SHOW = 3;
 	private static final int INITIAL_PAGE = 0;
@@ -36,10 +50,16 @@ public class WelcomeController {
 	private LogIn logIn;
 
 
+=======
+	@Autowired
+    private PostRepository postRepository;
+
+>>>>>>> f1bbef5beea7258a3833ff4c1c84930a771e2980
 	@RequestMapping("/welcome")
 	public String welcome() {
 		return "welcome";
 	}
+<<<<<<< HEAD
 
 	@RequestMapping("/about")
 	public String about(Map<String, Object> model) {
@@ -69,6 +89,9 @@ public class WelcomeController {
 		return "listing-all-pets";
 	}
 
+=======
+	
+>>>>>>> f1bbef5beea7258a3833ff4c1c84930a771e2980
 	@GetMapping("/all-posts")
     public String showAllPosts(@RequestParam("pageSize") Optional<Integer> pageSize,
 							   @RequestParam("page") Optional<Integer> page,
