@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+
+<nav class="navbar navbar-default" th:fragment="copy">
+    <div class="navbar-collapse collapse">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Web recruitment</a>
+        </div>
+        <ul th:switch="${active}" class="nav navbar-nav navbar-left">
+            <li th:case="'home'" class="active"><a href="/">Home</a></li>
+            <li th:case="*"><a href="/">Home</a></li>
+        </ul>
+        <ul th:if="${session.username != null}" th:switch="${active}" class="nav navbar-nav navbar-left">
+            <li th:case="'profile'" class="active"><a href="/profiles/{login}" th:href="@{/profiles/{login}(login=${session.username})}">Profile</a></li>
+            <li th:case="*"><a href="/profiles/{login}" th:href="@{/profiles/{login}(login=${session.username})}">Profile</a></li>
+        </ul>
+        <ul th:if="${session.username == null}" class="nav navbar-nav navbar-right">
+            <li><a href="/login-page"><b><p class="logIn">Log In</p></b></a></li>
+        </ul>
+        <ul th:if="${session.username != null}" class="nav navbar-nav navbar-right">
+            <li><a href="/logout"><b><p class="logIn">Log out</p></b></a></li>
+        </ul>
+    </div>
+</nav>
+
+</body>
+</html>
