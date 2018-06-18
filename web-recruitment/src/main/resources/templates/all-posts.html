@@ -17,7 +17,7 @@
 
 <div class="container">
     <th:block th:each="post : ${posts}">
-        <td th:utext="${post.title}"></td><br/>
+        <h3><td th:utext="${post.title}"></td></h3><br/>
         <td th:utext="${post.company}"></td><br/>
         <td th:utext="${post.description}"></td><br/>
         <a th:href="@{/posts/{postId}(postId=${post.id})}">More...</a>

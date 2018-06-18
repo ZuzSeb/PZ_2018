@@ -4,8 +4,8 @@ public class StringUtils {
 
     /**
      * Przycinanie ciągu znaków do podanej długość
-     * @param text
-     * @param max
+     * @param text tekst do przycięcia
+     * @param max liczba znaków do jakiej ma zostać przycięty tekst
      * @return
      */
     public static String cut(String text, int max){

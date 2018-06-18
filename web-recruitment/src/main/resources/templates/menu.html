@@ -19,6 +19,10 @@
             <li th:case="'profile'" class="active"><a href="/profiles/{login}" th:href="@{/profiles/{login}(login=${session.username})}">Profile</a></li>
             <li th:case="*"><a href="/profiles/{login}" th:href="@{/profiles/{login}(login=${session.username})}">Profile</a></li>
         </ul>
+        <ul th:if="${session.username != null}" th:switch="${active}" class="nav navbar-nav navbar-left">
+            <li th:case="'recruitment'" class="active"><a href="/recruitment/{login}}" th:href="@{/recruitment/{login}(login=${session.username})}">Recruitment</a></li>
+            <li th:case="*"><a href="/recruitment/{login}" th:href="@{/recruitment/{login}(login=${session.username})}">Recruitment</a></li>
+        </ul>
         <ul th:if="${session.username == null}" class="nav navbar-nav navbar-right">
             <li><a href="/login-page"><b><p class="logIn">Log In</p></b></a></li>
         </ul>

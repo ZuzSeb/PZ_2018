@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Simple Demo Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css"
+          th:href="@{~/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+
+    <link rel="stylesheet" th:href="@{~/css/main.css}"
+          href="../../css/main.css"/>
+
+</head>
+<body>
+<div th:replace="menu :: copy"></div>
+
+<div class="rounded-div-outer">
+    <form action="/addPost" method="post">
+        <div class="form-group">
+            <label for="inputTitle">First name</label>
+            <input type="text" class="form-control" id="inputTitle" name="title"
+                   placeholder="Enter title"/>
+        </div>
+        <div class="form-group">
+            <label for="inputDescription">Last name</label>
+            <input type="text" class="form-control" id="inputDescription" name="description"
+                   placeholder="Enter description"/>
+        </div>
+        <div class="form-group">
+            <label for="inputCompany">Login</label>
+            <input type="text" class="form-control" id="inputCompany" name="company"
+                   placeholder="Enter company"/>
+        </div>
+        <div class="form-group">
+            <label for="inputProfession">Login</label>
+            <input type="text" class="form-control" id="inputProfession" name="profession"
+                   placeholder="Enter profession"/>
+        </div>
+        <div class="form-group">
+            <label for="inputContact">Login</label>
+            <input type="text" class="form-control" id="inputContact" name="contact"
+                   placeholder="Enter contact"/>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+
+<script type="text/javascript"
+        src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div th:replace="footer :: copy"></div>
+</body>
+</html>

@@ -16,23 +16,23 @@
 <div th:replace="menu :: copy"></div>
 
 
-
 <div class="container">
-    <form method="post" enctype="multipart/form-data" th:action="@{/upload/{postId}(postId=${post.id})}" action="">
-        <a th:href="@{/posts/{postId}(postId=${post.id})}">Go back to post list</a>
-        <br/><br/>
-        <td th:utext="${post.profession}"></td><br/>
-        <td th:utext="${post.title}"></td><br/>
-        <td th:utext="${post.description}"></td><br/>
-        <td th:utext="${post.contact}"></td><br/>
-        <br/><br/>
-        <table>
-            <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
-            <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
-        </table>
-    </form>
-</div>
+    <br/><br/>
+    <th:block th:each="post : ${posts}">
+        <h3><td th:utext="${post.title}"></td></h3><br/>
+        <br/>
+        <td class="separator" th:text="--------------------------------------------------------------------------------------------------" ></td>
+        <br/>
+        <br/>
+    </th:block>
+    <br/><br/>
 
+</div>
+<div class="container">
+    <div class="addPost">
+    <a href="/add-post">Add post</a>
+    </div>
+</div>
 
 <script type="text/javascript"
         th:href="@{~/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>

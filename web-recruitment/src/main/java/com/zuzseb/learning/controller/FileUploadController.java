@@ -1,19 +1,27 @@
 package com.zuzseb.learning.controller;
 
 import com.zuzseb.learning.model.File;
+import com.zuzseb.learning.model.Post;
+import com.zuzseb.learning.model.User;
+import com.zuzseb.learning.repository.PostRepository;
 import com.zuzseb.learning.service.FileUploadService;
+import com.zuzseb.learning.service.UserService;
+import com.zuzseb.learning.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Blob;
+import java.util.Map;
 
 @Controller
 public class FileUploadController {
@@ -23,16 +31,29 @@ public class FileUploadController {
     @Autowired
     private FileUploadService fileUploadService;
 
-    @GetMapping("/upload")
-    public String upload(){
+    @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/upload/{postId}")
+    public String upload(@PathVariable("postId") Long postId, Map<String,Object> model){
+        LOGGER.info("/upload/{} GET", postId);
+        Post post = postRepository.findOne(postId);
+        post.setDescription(StringUtils.cut(post.getDescription(),300));
+        model.put("post", post);
         return "upload";
     }
 
-    @PostMapping("/upload")
+    @PostMapping("/upload/{postId}")
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
-        LOGGER.info("/upload");
-
+                                   RedirectAttributes redirectAttributes,
+                                   HttpServletRequest request, HttpSession session,
+                                   @PathVariable("postId") Long postId) {
+        LOGGER.info("/upload/{} POST", postId);
+        session.invalidate();
+        HttpSession httpSession = request.getSession();
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
             return "redirect:uploadStatus";
@@ -42,9 +63,15 @@ public class FileUploadController {
 
             // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
-//            User user = uploadFilerService.findByLogin(httpSession.getAttribute("userName").toString());
+            //TODO zalogowany user
+//            User user = userService.findByLogin(httpSession.getAttribute("userName").toString());
             File uploadFile = new File(bytes);
-            //TODO ST dodanie user & post
+            uploadFile.setPost(postRepository.findOne(postId));
+//            if(user != null){
+//                uploadFile.setUser(user);
+//            } else {
+//                LOGGER.info("No logged user");
+//            }
             fileUploadService.save(uploadFile);
 
 
@@ -52,9 +79,6 @@ public class FileUploadController {
             e.printStackTrace();
         }
 
-//        return "redirect:/uploadStatus";
-        return "upload";
+        return "all-posts";
     }
-
-
 }

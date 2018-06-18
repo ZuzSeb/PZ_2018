@@ -31,6 +31,8 @@ public class User {
     private String password;
     @Column(name = "description")
     private String description;
+    @Column(name = "role")
+    private String role;
     @OneToMany
     @JoinTable(name = "post_user")
     private Set<Post> posts;
@@ -122,6 +124,14 @@ public class User {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
