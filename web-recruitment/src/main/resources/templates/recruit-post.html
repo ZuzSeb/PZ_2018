@@ -17,7 +17,7 @@
 
 <div class="container">
     <!--<th:block th:each="post : ${post}">-->
-    <a th:href="@{/downloadFile/{postId}(postId=${post.id})}">Delete post</a>
+    <a th:href="@{/delete-post/{postId}(postId=${post.id})}">Delete post</a>
     <br/><br/>
     <td th:utext="${post.profession}"></td>
     <br/>

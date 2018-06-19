@@ -33,7 +33,7 @@ public class User {
     private String description;
     @Column(name = "role")
     private String role;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "post_user")
     private Set<Post> posts;
 //    @Transient

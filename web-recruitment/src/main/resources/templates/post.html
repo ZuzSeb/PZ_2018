@@ -26,17 +26,9 @@
     <td th:utext="${post.contact}"></td><br/>
     <br/><br/>
 
-    <!--<a href="/upload">Aplikuj </a>-->
-    <a th:href="@{/upload/{postId}(postId=${post.id})}">Aplikuj</a>
-    <!--<td>-->
-        <!--<a th:href="/upload"><span>Aplikuj</span></a>-->
-    <!--</td>-->
+    <a th:href="@{/upload/{postId}(postId=${post.id})}">Apply</a>
 
 </div>
-<!--<button data-toggle="collapse" data-target="#demo">click</button>-->
-
-
-<!-- /.container -->
 
 <script type="text/javascript"
         th:href="@{~/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>

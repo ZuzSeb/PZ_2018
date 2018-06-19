@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -72,9 +69,10 @@ public class PostController {
         return "recruit-post";
     }
 
-    @PostMapping("/delete-post/{postId}")
+    @GetMapping("/delete-post/{postId}")
     public String deletePost(@PathVariable("postId") Long postId,Map<String, Object> model) {
-        postRepository.delete(postId);
+        Post post = postRepository.findOne(postId);
+        postRepository.delete(post);
         model.put("infoMessage", "Post successfully deleted.");
         return "info/success";
     }

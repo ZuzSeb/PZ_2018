@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
@@ -52,26 +50,28 @@ public class FileUploadController {
 
     @PostMapping("/upload/{postId}")
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes,
                                    HttpSession session,
-                                   @PathVariable("postId") Long postId) {
+                                   @PathVariable("postId") Long postId,
+                                   Map<String, Object> model) {
         LOGGER.info("/upload/{} POST", postId);
-        if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-            return "redirect:uploadStatus";
+        if (file != null) {
+            try {
+                byte[] bytes = file.getBytes();
+                User user = userService.findByLogin(session.getAttribute("username").toString());
+                File uploadFile = new File(file.getOriginalFilename(), bytes, user, postRepository.findOne(postId));
+                LOGGER.info("No logged user");
+                fileUploadService.save(uploadFile);
+            } catch (IOException e) {
+                LOGGER.error("Uploading file error");
+                model.put("infoMessage", "User fas not found.");
+                return "info/error";
+            }
+            model.put("infoMessage", "Successfully applied.");
+            return "info/success";
+        } else {
+            model.put("infoMessage", "User fas not found.");
+            return "info/error";
         }
-
-        try {
-
-            byte[] bytes = file.getBytes();
-            User user = userService.findByLogin(session.getAttribute("username").toString());
-            File uploadFile = new File(file.getOriginalFilename(), bytes, user, postRepository.findOne(postId));
-            LOGGER.info("No logged user");
-            fileUploadService.save(uploadFile);
-        } catch (IOException e) {
-            LOGGER.error("Uploading file error");
-        }
-        return "all-posts";
     }
 
 //    @RequestMapping(value = "/downloadFile/{fileId}", method = RequestMethod.GET)
