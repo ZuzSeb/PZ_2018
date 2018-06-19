@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Controller
 public class RecruitmentController  {
@@ -44,8 +42,10 @@ public class RecruitmentController  {
     @PostMapping("/addPost")
     public String createPost(@ModelAttribute("post") Post post, HttpServletRequest request, HttpSession session, Map<String, Object> model) {
 //        LOGGER.info("POST /users, User: {}", user);
-        recruitmentRepository.save(post);
-        //TODO npc
+        if (post != null) {
+            recruitmentRepository.save(post);
+        }
+        System.out.println("USER FROM SESSION " + session.getAttribute("userName"));
 //        User user = userService.findByLogin(session.getAttribute("userName").toString());
 //        Set<Post> posts = user.getPosts();
 //        posts.add(post);
@@ -54,10 +54,7 @@ public class RecruitmentController  {
     }
 
     @GetMapping("/add-post")
-    public String getPost(@ModelAttribute("post") Post post, HttpServletRequest request, HttpSession session, Map<String, Object> model) {
-//        LOGGER.info("POST /users, User: {}", user);
-        session.invalidate();
-        HttpSession newSession = request.getSession();
+    public String getPost() {
         return "add-post";
     }
 }

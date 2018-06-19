@@ -5,6 +5,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "FILE")
+@NamedQueries({
+        @NamedQuery(name = "File.getByPost",query = "SELECT f FROM File f WHERE f.post = :post")
+})
 public class File {
 
     @Id
@@ -12,11 +15,14 @@ public class File {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "file_name")
+    private String fileName;
+
     @Lob
     @Column(name = "file_data")
     private byte[] fileData;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -24,11 +30,16 @@ public class File {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    public File(byte[] fileData) {
+    public File() {
+    }
+
+    public File(String fileName, byte[] fileData) {
+        this.fileName = fileName;
         this.fileData = fileData;
     }
 
-    public File(byte[] fileData, User user, Post post) {
+    public File(String fileName, byte[] fileData, User user, Post post) {
+        this.fileName = fileName;
         this.fileData = fileData;
         this.user = user;
         this.post = post;
@@ -36,6 +47,14 @@ public class File {
 
     public Long getId() {
         return id;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public byte[] getFileData() {

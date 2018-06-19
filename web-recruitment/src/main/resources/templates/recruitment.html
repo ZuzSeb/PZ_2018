@@ -20,6 +20,7 @@
     <br/><br/>
     <th:block th:each="post : ${posts}">
         <h3><td th:utext="${post.title}"></td></h3><br/>
+        <a th:href="@{/recruit-post/{postId}(postId=${post.id})}">More...</a>
         <br/>
         <td class="separator" th:text="--------------------------------------------------------------------------------------------------" ></td>
         <br/>

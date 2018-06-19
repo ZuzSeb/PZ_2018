@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Simple Demo Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css"
+          th:href="@{~/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+
+    <link rel="stylesheet" th:href="@{~/css/main.css}"
+          href="../../css/main.css"/>
+
+</head>
+<body>
+<div th:replace="menu :: copy"></div>
+
+<div class="container">
+    <!--<th:block th:each="post : ${post}">-->
+    <a th:href="@{/downloadFile/{postId}(postId=${post.id})}">Delete post</a>
+    <br/><br/>
+    <td th:utext="${post.profession}"></td>
+    <br/>
+    <td th:utext="${post.title}"></td>
+    <br/>
+    <td th:utext="${post.company}"></td>
+    <br/>
+    <td th:utext="${post.description}"></td>
+    <br/>
+    <td th:utext="${post.contact}"></td>
+    <br/>
+    <br/><br/>
+    <!--</th:block>-->
+    <td class="separator"
+        th:text="--------------------------------------------------------------------------------------------------"></td>
+</div>
+<div class="container">
+    <div class="col-sm-6">
+        <!--<h4>Posts for which you applied:</h4>-->
+        <table id="myTableId">
+            <thead>
+            <tr>
+                <th>Kandydat</th>
+                <th>CV</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="file : ${files}">
+                <td th:text="USEr"></td>
+                <!--<td th:text="${file.fileName}"></td>-->
+                <a th:href="@{/downloadFile/{fileId}(fileId=${file.id})}"><td th:text="${file.fileName}"></td></a>
+                <!--<td><a th:href="@{/profile/delete-user-post}">Delete from list</a></td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript"
+        th:href="@{~/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+<div th:replace="footer :: copy"></div>
+</body>
+</html>
