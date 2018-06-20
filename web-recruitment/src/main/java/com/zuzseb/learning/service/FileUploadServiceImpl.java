@@ -30,4 +30,9 @@ public class FileUploadServiceImpl implements FileUploadService {
                 .setParameter("post",post)
                 .getResultList();
     }
+
+    @Override
+    public void deleteFiles(List<File> files) {
+        files.forEach(f -> fileUploadRepository.delete(f));
+    }
 }

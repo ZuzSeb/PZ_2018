@@ -4,9 +4,11 @@ import com.zuzseb.learning.exception.ComparisonPasswordException;
 import com.zuzseb.learning.exception.UserNotFoundException;
 import com.zuzseb.learning.exception.WrongActualPasswordException;
 import com.zuzseb.learning.model.Login;
+import com.zuzseb.learning.model.Post;
 import com.zuzseb.learning.model.PwdChange;
 import com.zuzseb.learning.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -18,4 +20,6 @@ public interface UserService {
     Optional<User> getUserByLogin(String login);
     Optional<User> getUserByEmail(String login);
     void changePwd(String login, PwdChange pwdChange) throws WrongActualPasswordException, ComparisonPasswordException, UserNotFoundException;
+    void deletePostFromUser(Post post);
+    List<User> findByPost(Post post);
 }

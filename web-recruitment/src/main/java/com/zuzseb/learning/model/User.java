@@ -10,7 +10,8 @@ import java.util.Set;
 @Table(name = "USER")
 @NamedQueries({
         @NamedQuery(name = "getUserByLogin", query = "select u from User u where u.login = :login"),
-        @NamedQuery(name = "getUserByEmail", query = "select u from User u where u.email = :email")
+        @NamedQuery(name = "getUserByEmail", query = "select u from User u where u.email = :email"),
+        @NamedQuery(name = "getUserByPost", query = "select u from User u where u.posts = :post")
 })
 public class User {
 

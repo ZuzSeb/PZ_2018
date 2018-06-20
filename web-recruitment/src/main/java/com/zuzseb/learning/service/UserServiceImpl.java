@@ -4,6 +4,7 @@ import com.zuzseb.learning.exception.ComparisonPasswordException;
 import com.zuzseb.learning.exception.UserNotFoundException;
 import com.zuzseb.learning.exception.WrongActualPasswordException;
 import com.zuzseb.learning.model.Login;
+import com.zuzseb.learning.model.Post;
 import com.zuzseb.learning.model.PwdChange;
 import com.zuzseb.learning.model.User;
 import com.zuzseb.learning.repository.UserRepository;
@@ -17,6 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -116,6 +118,21 @@ public class UserServiceImpl implements UserService {
             em.merge(user);
         } else {
             throw new UserNotFoundException(String.format("User [%s] not found.", login));
+        }
+    }
+
+    @Override
+    public void deletePostFromUser(Post post) {
+//        List<User> userList = userRepository.find
+    }
+
+    @Override
+    public List<User> findByPost(Post post) {
+        try {
+            return em.createNamedQuery("getUserByPost", User.class).setParameter("email", post).getResultList();
+        } catch (Exception e) {
+            LOGGER.warn(getClass().getSimpleName() + "#getUserByEmail() method failed.", e);
+            return null;
         }
     }
 

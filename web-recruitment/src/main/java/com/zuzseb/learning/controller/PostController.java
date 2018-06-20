@@ -5,6 +5,7 @@ import com.zuzseb.learning.model.PagerModel;
 import com.zuzseb.learning.model.Post;
 import com.zuzseb.learning.repository.PostRepository;
 import com.zuzseb.learning.service.FileUploadService;
+import com.zuzseb.learning.service.UserService;
 import com.zuzseb.learning.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,9 @@ public class PostController {
 
     @Autowired
     private FileUploadService fileUploadService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/all-posts")
     public String showAllPosts(@RequestParam("pageSize") Optional<Integer> pageSize,
@@ -72,6 +76,9 @@ public class PostController {
     @GetMapping("/delete-post/{postId}")
     public String deletePost(@PathVariable("postId") Long postId,Map<String, Object> model) {
         Post post = postRepository.findOne(postId);
+        List<File> files = fileUploadService.findByPost(post);
+        fileUploadService.deleteFiles(files);
+
         postRepository.delete(post);
         model.put("infoMessage", "Post successfully deleted.");
         return "info/success";
