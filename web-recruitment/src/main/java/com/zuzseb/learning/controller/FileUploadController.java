@@ -41,7 +41,7 @@ public class FileUploadController {
 
     @GetMapping("/upload/{postId}")
     public String upload(@PathVariable("postId") Long postId, Map<String, Object> model) {
-        LOGGER.info("/upload/{} GET", postId);
+        LOGGER.info("GET /upload/{}", postId);
         Post post = postRepository.findOne(postId);
         post.setDescription(StringUtils.cut(post.getDescription(), 300));
         model.put("post", post);
@@ -53,23 +53,24 @@ public class FileUploadController {
                                    HttpSession session,
                                    @PathVariable("postId") Long postId,
                                    Map<String, Object> model) {
-        LOGGER.info("/upload/{} POST", postId);
+        LOGGER.info("POST /upload/{}", postId);
         if (file != null) {
             try {
                 byte[] bytes = file.getBytes();
-                User user = userService.findByLogin(session.getAttribute("username").toString());
+                String login = session.getAttribute("username").toString();
+                User user = userService.findByLogin(login);
                 File uploadFile = new File(file.getOriginalFilename(), bytes, user, postRepository.findOne(postId));
-                LOGGER.info("No logged user");
                 fileUploadService.save(uploadFile);
+                userService.addUserPost(login, postId);
             } catch (IOException e) {
                 LOGGER.error("Uploading file error");
-                model.put("infoMessage", "User fas not found.");
+                model.put("infoMessage", "Ups, something went wrong.");
                 return "info/error";
             }
             model.put("infoMessage", "Successfully applied.");
             return "info/success";
         } else {
-            model.put("infoMessage", "User fas not found.");
+            model.put("infoMessage", "File was not given.");
             return "info/error";
         }
     }

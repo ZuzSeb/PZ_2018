@@ -4,8 +4,10 @@ import com.zuzseb.learning.exception.ComparisonPasswordException;
 import com.zuzseb.learning.exception.UserNotFoundException;
 import com.zuzseb.learning.exception.WrongActualPasswordException;
 import com.zuzseb.learning.model.Login;
+import com.zuzseb.learning.model.Post;
 import com.zuzseb.learning.model.PwdChange;
 import com.zuzseb.learning.model.User;
+import com.zuzseb.learning.repository.PostRepository;
 import com.zuzseb.learning.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.Iterator;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -27,6 +31,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PostRepository postRepository;
 
     @Override
     public User save(User user) {
@@ -59,6 +65,17 @@ public class UserServiceImpl implements UserService {
         }
         return Optional.empty();
     }
+
+    @Override
+    public Optional<User> merge(User user) {
+        try {
+            return Optional.of(em.merge(user));
+        } catch (Exception e) {
+            LOGGER.warn(getClass().getSimpleName() + "#merge() method failed.", e);
+        }
+        return Optional.empty();
+    }
+
 
     @Override
     public boolean isEmailTaken(String email) {
@@ -117,6 +134,30 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new UserNotFoundException(String.format("User [%s] not found.", login));
         }
+    }
+
+    @Override
+    @Transactional
+    public void addUserPost(String login, Long postId) {
+        User foundUser = findByLogin(login);
+        Post postToApply = postRepository.findOne(postId);
+        foundUser.getPosts().add(postToApply);
+        em.merge(foundUser);
+    }
+
+    @Override
+    @Transactional
+    public void deleteUserPost(String login, Long postId) {
+        User foundUser = findByLogin(login);
+        Iterator<Post> iterator = foundUser.getPosts().iterator();
+        while (iterator.hasNext()) {
+            Post next = iterator.next();
+            if (Objects.equals(postId, next.getId())) {
+                iterator.remove();
+                break;
+            }
+        }
+        em.merge(foundUser);
     }
 
 }

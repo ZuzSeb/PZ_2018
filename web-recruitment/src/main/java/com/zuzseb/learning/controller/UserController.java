@@ -53,6 +53,14 @@ public class UserController {
         }
     }
 
+    @GetMapping("/users/{login}/posts/{post-id}")
+    public String deleteUserPost(@PathVariable("login") String login, @PathVariable("post-id") Long postId, Map<String, Object> model) {
+        LOGGER.info("DELETE /users/{}/posts/{}", login, postId);
+        userService.deleteUserPost(login, postId);
+        model.put("infoMessage", "Post deleted.");
+        return "info/success";
+    }
+
     @PatchMapping("/users/{login}/pwd")
     public String changePassword(@PathVariable("login") String login, PwdChange pwdChange, Map<String, Object> model) {
         LOGGER.info("PATCH /users/{}/pwd", login);
