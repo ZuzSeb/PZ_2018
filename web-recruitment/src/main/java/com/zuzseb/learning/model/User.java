@@ -34,7 +34,7 @@ public class User {
     private String description;
     @Column(name = "role")
     private String role;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "post_user")
     private Set<Post> posts;
 //    @Transient

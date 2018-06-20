@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface UserService {
     User save(User user);
     Optional<User> update(User user);
+    Optional<User> merge(User user);
     boolean isEmailTaken(String email);
     User findByLogin(String login);
     boolean authenticate(Login login);
@@ -22,4 +23,6 @@ public interface UserService {
     void changePwd(String login, PwdChange pwdChange) throws WrongActualPasswordException, ComparisonPasswordException, UserNotFoundException;
     void deletePostFromUser(Post post);
     List<User> findByPost(Post post);
+    void addUserPost(String login, Long postId);
+    void deleteUserPost(String login, Long postId);
 }

@@ -10,4 +10,4 @@ public interface FileUploadService {
     File save(File file);
     List<File> findByPost(Post post);
     void deleteFiles(List<File> files);
- }
+}
