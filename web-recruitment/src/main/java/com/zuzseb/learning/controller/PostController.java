@@ -3,6 +3,7 @@ package com.zuzseb.learning.controller;
 import com.zuzseb.learning.model.File;
 import com.zuzseb.learning.model.PagerModel;
 import com.zuzseb.learning.model.Post;
+import com.zuzseb.learning.repository.FileUploadRepository;
 import com.zuzseb.learning.repository.PostRepository;
 import com.zuzseb.learning.service.FileUploadService;
 import com.zuzseb.learning.service.UserService;
@@ -10,14 +11,22 @@ import com.zuzseb.learning.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static org.apache.tomcat.util.http.fileupload.FileUploadBase.ATTACHMENT;
 
 @Controller
 public class PostController {
@@ -34,6 +43,9 @@ public class PostController {
 
     @Autowired
     private FileUploadService fileUploadService;
+
+    @Autowired
+    private FileUploadRepository fileUploadRepository;
 
     @Autowired
     private UserService userService;
@@ -78,10 +90,24 @@ public class PostController {
         Post post = postRepository.findOne(postId);
         List<File> files = fileUploadService.findByPost(post);
         fileUploadService.deleteFiles(files);
-
+        userService.deletePostFromUser(post);
         postRepository.delete(post);
         model.put("infoMessage", "Post successfully deleted.");
         return "info/success";
     }
 
+    @GetMapping(value = "/downloadFile/{fileId}")
+    public ResponseEntity<ByteArrayResource> downloadEbillFile(@PathVariable("fileId") Long fildId)
+            throws IOException{
+        File file = fileUploadRepository.findOne(fildId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION,"attachment;filename=" + file.getFileName());
+        headers.setContentDispositionFormData(ATTACHMENT, file.getFileName());
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(new ByteArrayResource(file.getFileData()));
+    }
 }

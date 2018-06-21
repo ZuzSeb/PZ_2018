@@ -9,6 +9,7 @@ import com.zuzseb.learning.model.PwdChange;
 import com.zuzseb.learning.model.User;
 import com.zuzseb.learning.repository.PostRepository;
 import com.zuzseb.learning.repository.UserRepository;
+import javafx.geometry.Pos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.util.List;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class UserServiceImpl implements UserService {
@@ -138,14 +136,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deletePostFromUser(Post post) {
-//        List<User> userList = userRepository.find
+        List<User> userList = userRepository.findAll();
+        List<User> users = new ArrayList<>();
+        for (User u: userList){
+            for (Post p : u.getPosts()){
+                if (p.getId() == post.getId()){
+                    users.add(u);
+                }
+            }
+        }
+        LOGGER.info("user size/ {}", users.size());
+        users.forEach(u -> deleteUserPost(u.getLogin(), post.getId()));
     }
 
     @Override
     public List<User> findByPost(Post post) {
         try {
-            return em.createNamedQuery("getUserByPost", User.class).setParameter("email", post).getResultList();
+            return em.createNamedQuery("getUserByPost", User.class).setParameter("post", post).getResultList();
         } catch (Exception e) {
             LOGGER.warn(getClass().getSimpleName() + "#getUserByEmail() method failed.", e);
             return null;

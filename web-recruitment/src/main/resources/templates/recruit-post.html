@@ -42,13 +42,14 @@
             <tr>
                 <th>Kandydat</th>
                 <th>CV</th>
+                <th>Download</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="file : ${files}">
                 <td th:text="USEr"></td>
-                <!--<td th:text="${file.fileName}"></td>-->
-                <a th:href="@{/downloadFile/{fileId}(fileId=${file.id})}"><td th:text="${file.fileName}"></td></a>
+                <td th:text="${file.fileName}"></td>
+                <td><a th:href="@{/downloadFile/{fileId}(fileId=${file.id})}">Download</a></td>
                 <!--<td><a th:href="@{/profile/delete-user-post}">Delete from list</a></td>-->
             </tr>
             </tbody>
