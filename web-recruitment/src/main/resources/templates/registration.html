@@ -47,10 +47,9 @@
         </div>
         <div class="form-group">
             <label for="role">Account type</label>
-            <select>
-                <option th:each="state : ${T(com.zuzseb.learning.model.UserRole).values()}" id="role" name="roleSelect" class="form-control" value="test" th:value="${state}" th:text="${state.getUserRole()}"></option>
+            <select name="role">
+                <option th:each="role:${T(com.zuzseb.learning.model.UserRole).values()}" id="role" name="role" class="form-control" value="test" th:value="${role}" th:text="${role.getUserRole()}"></option>
             </select>
-            <input type="hidden" name="role" value="test" />
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
