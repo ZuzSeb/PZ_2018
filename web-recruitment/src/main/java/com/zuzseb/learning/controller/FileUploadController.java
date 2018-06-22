@@ -43,7 +43,7 @@ public class FileUploadController {
     public String upload(@PathVariable("postId") Long postId, Map<String, Object> model) {
         LOGGER.info("GET /upload/{}", postId);
         Post post = postRepository.findOne(postId);
-        post.setDescription(StringUtils.cut(post.getDescription(), 300));
+        post.setDescription(post.getDescription().length() > 300 ? StringUtils.cut(post.getDescription(), 300) : post.getDescription());
         model.put("post", post);
         return "upload";
     }

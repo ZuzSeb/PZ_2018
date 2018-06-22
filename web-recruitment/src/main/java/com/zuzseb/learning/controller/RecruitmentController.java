@@ -48,7 +48,8 @@ public class RecruitmentController  {
         Set<Post> posts = user.getPosts();
         posts.add(post);
         userService.update(user);
-        return "recruitment";
+        model.put("infoMessage", "Post successfully added.");
+        return "info/success";
     }
 
     @GetMapping("/add-post")

@@ -35,6 +35,7 @@ public class UserController {
         } else {
             userService.save(user);
             newSession.setAttribute("username", user.getLogin());
+            newSession.setAttribute("role", user.getRole());
             model.put("infoMessage", "User successfully created.");
             return "info/success";
         }
@@ -92,9 +93,11 @@ public class UserController {
     public String login(Login login, HttpServletRequest request, HttpSession session) {
         session.invalidate();
         HttpSession newSession;
+        User user = userService.findByLogin(login.getLogin());
         if (userService.authenticate(login)) {
             newSession = request.getSession();
             newSession.setAttribute("username", login.getLogin());
+            newSession.setAttribute("role", user.getRole());
             return "welcome";
         } else {
             return "no-access";

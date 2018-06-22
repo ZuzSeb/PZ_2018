@@ -57,7 +57,7 @@ public class PostController {
         int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
         int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
         Page<Post> postsList = postRepository.findAll(new PageRequest(evalPage, evalPageSize));
-        postsList.forEach(post -> post.setDescription(StringUtils.cut(post.getDescription(), 300)));
+        postsList.forEach(post -> post.setDescription(post.getDescription().length() > 300 ? StringUtils.cut(post.getDescription(), 300) : post.getDescription()));
         PagerModel pager = new PagerModel(postsList.getTotalPages(), postsList.getNumber(), BUTTONS_TO_SHOW);
 
         model.put("posts", postsList);
