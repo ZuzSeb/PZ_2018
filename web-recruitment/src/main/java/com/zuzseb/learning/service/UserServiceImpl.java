@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
                         oldUser.get().setLastName(user.getLastName());
                         oldUser.get().setEmail(user.getEmail());
                         oldUser.get().setDescription(user.getDescription());
+                        oldUser.get().setRole(user.getRole());
                         return Optional.of(em.merge(oldUser.get()));
                     }
                 } else {

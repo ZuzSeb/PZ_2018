@@ -33,7 +33,7 @@ public class User {
     @Column(name = "description")
     private String description;
     @Column(name = "role")
-    private String role;
+    private UserRole role;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "post_user")
     private Set<Post> posts;
@@ -85,6 +85,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.description = description;
+        this.role = role;
     }
 
     public String getFirstName() {
@@ -127,11 +128,11 @@ public class User {
         this.description = description;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 
