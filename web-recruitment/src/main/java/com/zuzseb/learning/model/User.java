@@ -3,7 +3,6 @@ package com.zuzseb.learning.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -37,8 +36,6 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "post_user")
     private Set<Post> posts;
-//    @Transient
-//    private String _method;
 
     public String getId() {
         return id;
@@ -47,14 +44,6 @@ public class User {
     public void setId(String id) {
         this.id = id;
     }
-
-//    public String get_method() {
-//        return _method;
-//    }
-//
-//    public void set_method(String _method) {
-//        this._method = _method;
-//    }
 
     public String getLogin() {
         return login;
@@ -79,7 +68,7 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String password, String description) {
+    public User(String firstName, String lastName, String email, String password, String description, UserRole role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -159,6 +148,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", description='" + description + '\'' +
+                ", role='" + role + '\'' +
                 ", posts=" + posts +
                 '}';
     }

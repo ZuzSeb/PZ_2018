@@ -16,13 +16,12 @@ public interface UserService {
     Optional<User> update(User user);
     Optional<User> merge(User user);
     boolean isEmailTaken(String email);
-    User findByLogin(String login);
+    User findByLogin(String login) throws UserNotFoundException;
     boolean authenticate(Login login);
     Optional<User> getUserByLogin(String login);
     Optional<User> getUserByEmail(String login);
     void changePwd(String login, PwdChange pwdChange) throws WrongActualPasswordException, ComparisonPasswordException, UserNotFoundException;
     void deletePostFromUser(Post post);
-    List<User> findByPost(Post post);
-    void addUserPost(String login, Long postId);
-    void deleteUserPost(String login, Long postId);
+    void addUserPost(String login, Long postId) throws UserNotFoundException;
+    void deleteUserPost(String login, Long postId) throws UserNotFoundException;
 }

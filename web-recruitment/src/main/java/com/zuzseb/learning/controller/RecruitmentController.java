@@ -1,5 +1,6 @@
 package com.zuzseb.learning.controller;
 
+import com.zuzseb.learning.exception.UserNotFoundException;
 import com.zuzseb.learning.model.Post;
 import com.zuzseb.learning.model.User;
 import com.zuzseb.learning.repository.RecruitmentRepository;
@@ -30,7 +31,7 @@ public class RecruitmentController  {
 
     @GetMapping("/recruitment/{login}")
     public String getRecruitment(@PathVariable("login") String login,
-                               Map<String, Object> model) {
+                               Map<String, Object> model) throws UserNotFoundException {
         LOGGER.info("USER {}", login);
         User foundUser = userService.findByLogin(login);
         model.put("user", foundUser);
@@ -40,7 +41,7 @@ public class RecruitmentController  {
 
 
     @PostMapping("/addPost")
-    public String createPost(@ModelAttribute("post") Post post, HttpSession session, Map<String, Object> model) {
+    public String createPost(@ModelAttribute("post") Post post, HttpSession session, Map<String, Object> model) throws UserNotFoundException {
         if (post != null) {
             recruitmentRepository.save(post);
         }
