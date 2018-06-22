@@ -46,10 +46,11 @@
             <input type="text" class="form-control" id="info" name="description" placeholder="Tell us something about you..."/>
         </div>
         <div class="form-group">
-            <label for="info">Account type</label>
+            <label for="role">Account type</label>
             <select>
-                <option th:each="state : ${T(com.zuzseb.learning.model.UserRole).values()}" id="role" name="role" class="form-control" th:value="${state}" th:text="${state.getUserRole()}"></option>
+                <option th:each="state : ${T(com.zuzseb.learning.model.UserRole).values()}" id="role" name="roleSelect" class="form-control" value="test" th:value="${state}" th:text="${state.getUserRole()}"></option>
             </select>
+            <input type="hidden" name="role" value="test" />
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

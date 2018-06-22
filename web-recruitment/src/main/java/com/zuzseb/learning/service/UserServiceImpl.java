@@ -9,7 +9,6 @@ import com.zuzseb.learning.model.PwdChange;
 import com.zuzseb.learning.model.User;
 import com.zuzseb.learning.repository.PostRepository;
 import com.zuzseb.learning.repository.UserRepository;
-import javafx.geometry.Pos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,10 +83,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByLogin(String login) {
-        TypedQuery<User> query = em.createQuery("select u from User u where u.login = :login", User.class);
-        query.setParameter("login", login);
-        return query.getSingleResult();
+    public User findByLogin(String login) throws UserNotFoundException {
+        try {
+            TypedQuery<User> query = em.createQuery("select u from User u where u.login = :login", User.class);
+            query.setParameter("login", login);
+            return query.getSingleResult();
+        } catch (Exception e) {
+            throw new UserNotFoundException("Access denied.");
+        }
     }
 
     @Override
@@ -148,21 +151,17 @@ public class UserServiceImpl implements UserService {
             }
         }
         LOGGER.info("user size/ {}", users.size());
-        users.forEach(u -> deleteUserPost(u.getLogin(), post.getId()));
-    }
-
-    @Override
-    public List<User> findByPost(Post post) {
-        try {
-            return em.createNamedQuery("getUserByPost", User.class).setParameter("post", post).getResultList();
-        } catch (Exception e) {
-            LOGGER.warn(getClass().getSimpleName() + "#getUserByEmail() method failed.", e);
-            return null;
-        }
+        users.forEach(u -> {
+            try {
+                deleteUserPost(u.getLogin(), post.getId());
+            } catch (UserNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Transactional
-    public void addUserPost(String login, Long postId) {
+    public void addUserPost(String login, Long postId) throws UserNotFoundException {
         User foundUser = findByLogin(login);
         Post postToApply = postRepository.findOne(postId);
         foundUser.getPosts().add(postToApply);
@@ -171,7 +170,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void deleteUserPost(String login, Long postId) {
+    public void deleteUserPost(String login, Long postId) throws UserNotFoundException {
         User foundUser = findByLogin(login);
         Iterator<Post> iterator = foundUser.getPosts().iterator();
         while (iterator.hasNext()) {

@@ -2,9 +2,7 @@ package com.zuzseb.learning.model;
 
 public class PagerModel {
     private int buttonsToShow = 5;
-
     private int startPage;
-
     private int endPage;
 
     public PagerModel(int totalPages, int currentPage, int buttonsToShow) {
@@ -36,11 +34,19 @@ public class PagerModel {
 
     }
 
-    public int getButtonsToShow() {
+    public int getStartPage() {
+        return startPage;
+    }
+
+    public int getEndPage() {
+        return endPage;
+    }
+
+    private int getButtonsToShow() {
         return buttonsToShow;
     }
 
-    public void setButtonsToShow(int buttonsToShow) {
+    private void setButtonsToShow(int buttonsToShow) {
         if (buttonsToShow % 2 != 0) {
             this.buttonsToShow = buttonsToShow;
         } else {
@@ -48,19 +54,11 @@ public class PagerModel {
         }
     }
 
-    public int getStartPage() {
-        return startPage;
-    }
-
-    public void setStartPage(int startPage) {
+    private void setStartPage(int startPage) {
         this.startPage = startPage;
     }
 
-    public int getEndPage() {
-        return endPage;
-    }
-
-    public void setEndPage(int endPage) {
+    private void setEndPage(int endPage) {
         this.endPage = endPage;
     }
 

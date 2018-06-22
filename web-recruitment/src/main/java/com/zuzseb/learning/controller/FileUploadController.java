@@ -1,9 +1,9 @@
 package com.zuzseb.learning.controller;
 
+import com.zuzseb.learning.exception.UserNotFoundException;
 import com.zuzseb.learning.model.File;
 import com.zuzseb.learning.model.Post;
 import com.zuzseb.learning.model.User;
-import com.zuzseb.learning.repository.FileUploadRepository;
 import com.zuzseb.learning.repository.PostRepository;
 import com.zuzseb.learning.service.FileUploadService;
 import com.zuzseb.learning.service.UserService;
@@ -29,9 +29,6 @@ public class FileUploadController {
 
     @Autowired
     private FileUploadService fileUploadService;
-
-    @Autowired
-    private FileUploadRepository fileUploadRepository;
 
     @Autowired
     private PostRepository postRepository;
@@ -66,6 +63,9 @@ public class FileUploadController {
                 LOGGER.error("Uploading file error");
                 model.put("infoMessage", "Ups, something went wrong.");
                 return "info/error";
+            } catch (UserNotFoundException e) {
+                model.put("infoMessage", "User was not found.");
+                return "info/error";
             }
             model.put("infoMessage", "Successfully applied.");
             return "info/success";
@@ -74,11 +74,4 @@ public class FileUploadController {
             return "info/error";
         }
     }
-
-//    @RequestMapping(value = "/downloadFile/{fileId}", method = RequestMethod.GET)
-//    @ResponseBody
-//    public FileSystemResource downloadFile(@Param(value="fileId") Long id) {
-//        File file = fileUploadRepository.findOne(id);
-//        return new FileSystemResource(file.getFileData().);
-//    }
 }

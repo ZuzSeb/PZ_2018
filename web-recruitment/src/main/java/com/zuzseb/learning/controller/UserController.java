@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{login}/posts/{post-id}")
-    public String deleteUserPost(@PathVariable("login") String login, @PathVariable("post-id") Long postId, Map<String, Object> model) {
+    public String deleteUserPost(@PathVariable("login") String login, @PathVariable("post-id") Long postId, Map<String, Object> model) throws UserNotFoundException {
         LOGGER.info("DELETE /users/{}/posts/{}", login, postId);
         userService.deleteUserPost(login, postId);
         model.put("infoMessage", "Post deleted.");
@@ -82,7 +82,7 @@ public class UserController {
     }
 
     @GetMapping("/profiles/{login}")
-    public String getProfile(@PathVariable("login") String login, Map<String, Object> model) {
+    public String getProfile(@PathVariable("login") String login, Map<String, Object> model) throws UserNotFoundException {
         User foundUser = userService.findByLogin(login);
         model.put("user", foundUser);
         model.put("posts", foundUser.getPosts());
@@ -93,7 +93,12 @@ public class UserController {
     public String login(Login login, HttpServletRequest request, HttpSession session) {
         session.invalidate();
         HttpSession newSession;
-        User user = userService.findByLogin(login.getLogin());
+        User user;
+        try {
+            user = userService.findByLogin(login.getLogin());
+        } catch (UserNotFoundException e) {
+            return "no-access";
+        }
         if (userService.authenticate(login)) {
             newSession = request.getSession();
             newSession.setAttribute("username", login.getLogin());
