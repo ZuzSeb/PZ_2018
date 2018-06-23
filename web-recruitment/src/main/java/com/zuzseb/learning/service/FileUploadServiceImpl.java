@@ -2,6 +2,7 @@ package com.zuzseb.learning.service;
 
 import com.zuzseb.learning.model.File;
 import com.zuzseb.learning.model.Post;
+import com.zuzseb.learning.model.User;
 import com.zuzseb.learning.repository.FileUploadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,12 +28,26 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Override
     public List<File> findByPost(Post post) {
         return em.createNamedQuery("File.getByPost", File.class)
-                .setParameter("post",post)
+                .setParameter("post", post)
+                .getResultList();
+    }
+
+    @Override
+    public List<File> findByUser(User user) {
+        return em.createNamedQuery("File.getByUser", File.class)
+                .setParameter("user", user)
                 .getResultList();
     }
 
     @Override
     public void deleteFiles(List<File> files) {
         files.forEach(f -> fileUploadRepository.delete(f));
+    }
+
+    @Override
+    public void deleteFileByUserAndPost(User user, Post post) {
+        em.createNamedQuery("File.deleteFileByUserAndPost")
+                .setParameter("user", user)
+                .setParameter("post", post);
     }
 }

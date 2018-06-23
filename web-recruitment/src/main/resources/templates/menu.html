@@ -29,6 +29,9 @@
         <ul th:if="${session.username != null}" class="nav navbar-nav navbar-right">
             <li><a href="/logout"><b><p class="logIn">Log out</p></b></a></li>
         </ul>
+        <ul th:if="${session.username != null}" class="nav navbar-nav navbar-right">
+            <li><a href="/#"><b><p class="username" th:text="${session.username}"></p></b></a></li>
+        </ul>
     </div>
 </nav>
 

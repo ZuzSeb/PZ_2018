@@ -33,8 +33,12 @@ public class User {
     private String description;
     @Column(name = "role")
     private String role;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "post_user")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "post_user",
+            joinColumns = { @JoinColumn(name = "USER_id") },
+            inverseJoinColumns = { @JoinColumn(name = "POST_id") }
+    )
     private Set<Post> posts;
 
     public String getId() {

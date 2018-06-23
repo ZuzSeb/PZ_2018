@@ -3,6 +3,7 @@ package com.zuzseb.learning.model;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "POST")
@@ -22,6 +23,8 @@ public class Post {
     private String profession;
     @Column(name = "contact")
     private String contact;
+    @ManyToMany(mappedBy = "posts")
+    private Set<User> users;
 
     public Post() {
     }

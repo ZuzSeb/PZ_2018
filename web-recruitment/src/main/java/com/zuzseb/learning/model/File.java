@@ -6,7 +6,9 @@ import java.util.Objects;
 @Entity
 @Table(name = "FILE")
 @NamedQueries({
-        @NamedQuery(name = "File.getByPost",query = "SELECT f FROM File f WHERE f.post = :post")
+        @NamedQuery(name = "File.getByPost", query = "SELECT f FROM File f WHERE f.post = :post"),
+        @NamedQuery(name = "File.getByUser", query = "SELECT f FROM File f WHERE f.user = :user"),
+        @NamedQuery(name = "File.deleteFileByUserAndPost", query = "DELETE FROM File f WHERE f.user = :user AND f.post = :post")
 })
 public class File {
 
@@ -26,7 +28,7 @@ public class File {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post;
 

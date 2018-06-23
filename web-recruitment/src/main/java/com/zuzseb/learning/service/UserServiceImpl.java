@@ -27,10 +27,16 @@ public class UserServiceImpl implements UserService {
     @PersistenceContext
     private EntityManager em;
 
+    private final UserRepository userRepository;
+    private final PostRepository postRepository;
+    private final FileUploadService fileUploadService;
+
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PostRepository postRepository;
+    public UserServiceImpl(UserRepository userRepository, PostRepository postRepository, FileUploadService fileUploadService) {
+        this.userRepository = userRepository;
+        this.postRepository = postRepository;
+        this.fileUploadService = fileUploadService;
+    }
 
     @Override
     public User save(User user) {

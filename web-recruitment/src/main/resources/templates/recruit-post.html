@@ -16,7 +16,6 @@
 <div th:replace="menu :: copy"></div>
 
 <div class="container">
-    <!--<th:block th:each="post : ${post}">-->
     <a th:href="@{/delete-post/{postId}(postId=${post.id})}">Delete post</a>
     <br/><br/>
     <td th:utext="${post.profession}"></td>
@@ -30,27 +29,27 @@
     <td th:utext="${post.contact}"></td>
     <br/>
     <br/><br/>
-    <!--</th:block>-->
     <td class="separator"
         th:text="--------------------------------------------------------------------------------------------------"></td>
 </div>
 <div class="container">
     <div class="col-sm-6">
-        <!--<h4>Posts for which you applied:</h4>-->
         <table id="myTableId">
+            <h4>Candidates</h4>
             <thead>
             <tr>
-                <th>Kandydat</th>
+                <th>First Name</th>
+                <th>Last Name</th>
                 <th>CV</th>
                 <th>Download</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="file : ${files}">
-                <td th:text="USEr"></td>
+                <td th:text="${file.user.firstName}"></td>
+                <td th:text="${file.user.lastName}"></td>
                 <td th:text="${file.fileName}"></td>
                 <td><a th:href="@{/downloadFile/{fileId}(fileId=${file.id})}">Download</a></td>
-                <!--<td><a th:href="@{/profile/delete-user-post}">Delete from list</a></td>-->
             </tr>
             </tbody>
         </table>

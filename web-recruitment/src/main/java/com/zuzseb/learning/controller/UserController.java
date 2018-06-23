@@ -3,9 +3,9 @@ package com.zuzseb.learning.controller;
 import com.zuzseb.learning.exception.ComparisonPasswordException;
 import com.zuzseb.learning.exception.UserNotFoundException;
 import com.zuzseb.learning.exception.WrongActualPasswordException;
-import com.zuzseb.learning.model.Login;
-import com.zuzseb.learning.model.PwdChange;
-import com.zuzseb.learning.model.User;
+import com.zuzseb.learning.model.*;
+import com.zuzseb.learning.repository.PostRepository;
+import com.zuzseb.learning.service.FileUploadService;
 import com.zuzseb.learning.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,14 +15,24 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+    private final UserService userService;
+    private final FileUploadService fileUploadService;
+    private final PostRepository postRepository;
+
     @Autowired
-    private UserService userService;
+    public UserController(FileUploadService fileUploadService, UserService userService, PostRepository postRepository) {
+        this.fileUploadService = fileUploadService;
+        this.userService = userService;
+        this.postRepository = postRepository;
+    }
 
     @PostMapping("/users")
     public String createUser(@ModelAttribute("user") User user, HttpServletRequest request, HttpSession session, Map<String, Object> model) {
@@ -55,9 +65,18 @@ public class UserController {
     }
 
     @GetMapping("/users/{login}/posts/{post-id}")
-    public String deleteUserPost(@PathVariable("login") String login, @PathVariable("post-id") Long postId, Map<String, Object> model) throws UserNotFoundException {
+    public String deleteUserPost(@PathVariable("login") String login, @PathVariable("post-id") Long postId, Map<String, Object> model) {
         LOGGER.info("DELETE /users/{}/posts/{}", login, postId);
-        userService.deleteUserPost(login, postId);
+        try {
+            User foundUser = userService.findByLogin(login);
+            Post foundPost = postRepository.findOne(postId);
+            fileUploadService.deleteFileByUserAndPost(foundUser, foundPost);
+            userService.deleteUserPost(login, postId);
+        } catch (Exception e) {
+            LOGGER.warn("" + e);
+            model.put("infoMessage", "We're sorry. Something went wrong.");
+            return "info/error";
+        }
         model.put("infoMessage", "Post deleted.");
         return "info/success";
     }
@@ -84,8 +103,10 @@ public class UserController {
     @GetMapping("/profiles/{login}")
     public String getProfile(@PathVariable("login") String login, Map<String, Object> model) throws UserNotFoundException {
         User foundUser = userService.findByLogin(login);
+        List<File> files = fileUploadService.findByUser(foundUser);
+        List<Post> posts = files.stream().map(File::getPost).collect(Collectors.toList());
         model.put("user", foundUser);
-        model.put("posts", foundUser.getPosts());
+        model.put("posts", posts);
         return "profile";
     }
 
