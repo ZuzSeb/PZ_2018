@@ -6,6 +6,7 @@ import com.zuzseb.learning.model.User;
 import com.zuzseb.learning.repository.FileUploadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -45,9 +46,15 @@ public class FileUploadServiceImpl implements FileUploadService {
     }
 
     @Override
+    @Transactional
     public void deleteFileByUserAndPost(User user, Post post) {
-        em.createNamedQuery("File.deleteFileByUserAndPost")
+//        em.createNamedQuery("File.deleteFileByUserAndPost")
+//                .setParameter("user", user)
+//                .setParameter("post", post);
+        List<File> files = em.createNamedQuery("File.findUserFile", File.class)
                 .setParameter("user", user)
-                .setParameter("post", post);
+                .setParameter("post", post)
+                .getResultList();
+        files.forEach(f -> em.remove(f));
     }
 }

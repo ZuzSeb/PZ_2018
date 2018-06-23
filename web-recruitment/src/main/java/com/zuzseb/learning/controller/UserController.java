@@ -70,8 +70,9 @@ public class UserController {
         try {
             User foundUser = userService.findByLogin(login);
             Post foundPost = postRepository.findOne(postId);
+//            fileUploadService.
             fileUploadService.deleteFileByUserAndPost(foundUser, foundPost);
-            userService.deleteUserPost(login, postId);
+//            userService.deleteUserPost(login, postId);
         } catch (Exception e) {
             LOGGER.warn("" + e);
             model.put("infoMessage", "We're sorry. Something went wrong.");
