@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface FileUploadService {
 
-    File save(File file);
+    void save(File file);
     List<File> findByPost(Post post);
     List<File> findByUser(User user);
     void deleteFiles(List<File> files);

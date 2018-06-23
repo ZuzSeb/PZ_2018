@@ -8,7 +8,6 @@ import java.util.Objects;
 @NamedQueries({
         @NamedQuery(name = "File.getByPost", query = "SELECT f FROM File f WHERE f.post = :post"),
         @NamedQuery(name = "File.getByUser", query = "SELECT f FROM File f WHERE f.user = :user"),
-        @NamedQuery(name = "File.deleteFileByUserAndPost", query = "DELETE FROM File f WHERE f.user = :user AND f.post = :post"),
         @NamedQuery(name = "File.findUserFile", query = "SELECT f FROM File f where f.user = :user AND f.post = :post")
 })
 public class File {
@@ -96,7 +95,6 @@ public class File {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id, user, post);
     }
 

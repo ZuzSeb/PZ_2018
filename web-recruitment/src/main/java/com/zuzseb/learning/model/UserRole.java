@@ -3,7 +3,7 @@ package com.zuzseb.learning.model;
 public enum UserRole {
 
     standard("Użytkownik standardowy"),
-    recruitment("Rekruter");
+    recruiter("Rekruter");
 
     private String userRole;
 

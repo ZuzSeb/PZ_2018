@@ -20,9 +20,9 @@
     <br/><br/>
     <th:block th:each="post : ${posts}">
         <h3><td th:utext="${post.title}"></td></h3><br/>
-        <a th:href="@{/recruit-post/{postId}(postId=${post.id})}">More...</a>
+        <a class="btn btn-info" th:href="@{/recruit-post/{postId}(postId=${post.id})}" role="button">More</a>
         <br/>
-        <td class="separator" th:text="--------------------------------------------------------------------------------------------------" ></td>
+        <td class="separator"><h4>--------------------------------------------------------------------------------------------------</h4></td>
         <br/>
         <br/>
     </th:block>
@@ -31,7 +31,7 @@
 </div>
 <div class="container">
     <div class="addPost">
-    <a href="/add-post">Add post</a>
+        <a class="btn btn-info" href="/add-post" role="button">Add post</a>
     </div>
 </div>
 

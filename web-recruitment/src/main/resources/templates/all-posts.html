@@ -20,7 +20,7 @@
         <h3><td th:utext="${post.title}"></td></h3><br/>
         <td th:utext="${post.company}"></td><br/>
         <td th:utext="${post.description}"></td><br/>
-        <a th:href="@{/posts/{postId}(postId=${post.id})}">More...</a>
+        <a class="btn btn-info" th:href="@{/posts/{postId}(postId=${post.id})}" role="button" >More</a>
         <br/>
         <td class="separator"><h4>--------------------------------------------------------------------------------------------------</h4></td>
         <br/>

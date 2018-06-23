@@ -58,7 +58,6 @@ public class FileUploadController {
                 User user = userService.findByLogin(login);
                 File uploadFile = new File(file.getOriginalFilename(), bytes, user, postRepository.findOne(postId));
                 fileUploadService.save(uploadFile);
-//                userService.addUserPost(login, postId);
             } catch (IOException e) {
                 LOGGER.error("Uploading file error");
                 model.put("infoMessage", "Ups, something went wrong.");

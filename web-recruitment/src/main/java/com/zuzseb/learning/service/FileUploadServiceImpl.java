@@ -22,8 +22,8 @@ public class FileUploadServiceImpl implements FileUploadService {
     private FileUploadRepository fileUploadRepository;
 
     @Override
-    public File save(File file) {
-        return (File) fileUploadRepository.save(file);
+    public void save(File file) {
+        fileUploadRepository.save(file);
     }
 
     @Override
@@ -48,9 +48,6 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Override
     @Transactional
     public void deleteFileByUserAndPost(User user, Post post) {
-//        em.createNamedQuery("File.deleteFileByUserAndPost")
-//                .setParameter("user", user)
-//                .setParameter("post", post);
         List<File> files = em.createNamedQuery("File.findUserFile", File.class)
                 .setParameter("user", user)
                 .setParameter("post", post)

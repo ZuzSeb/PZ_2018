@@ -17,7 +17,7 @@
 
 
 <div class="container">
-    <a href="/all-posts">Go back to post list</a>
+    <a class="btn btn-info" href="/all-posts" role="button">Go back to post list</a>
     <br/><br/>
     <td th:utext="${post.profession}"></td><br/>
     <td th:utext="${post.title}"></td><br/>
@@ -26,7 +26,9 @@
     <td th:utext="${post.contact}"></td><br/>
     <br/><br/>
 
-    <a th:href="@{/upload/{postId}(postId=${post.id})}">Apply</a>
+    <th:block th:if="${session.username != null}">
+        <a class="btn btn-info" th:href="@{/upload/{postId}(postId=${post.id})}" role="button">Apply</a>
+    </th:block>
 
 </div>
 

@@ -16,7 +16,7 @@
 <div th:replace="menu :: copy"></div>
 
 <div class="container">
-    <a th:href="@{/delete-post/{postId}(postId=${post.id})}">Delete post</a>
+    <a class="btn btn-info" th:href="@{/recruitment/{username}(username=${session.username})}" role="button">Go back to post list</a>
     <br/><br/>
     <td th:utext="${post.profession}"></td>
     <br/>
@@ -29,8 +29,9 @@
     <td th:utext="${post.contact}"></td>
     <br/>
     <br/><br/>
-    <td class="separator"
-        th:text="--------------------------------------------------------------------------------------------------"></td>
+    <a class="btn btn-info" th:href="@{/delete-post/{postId}(postId=${post.id})}" role="button">Delete post</a>
+    <br/><br/>
+    <td class="separator"><h4>--------------------------------------------------------------------------------------------------</h4></td>
 </div>
 <div class="container">
     <div class="col-sm-6">
@@ -49,7 +50,7 @@
                 <td th:text="${file.user.firstName}"></td>
                 <td th:text="${file.user.lastName}"></td>
                 <td th:text="${file.fileName}"></td>
-                <td><a th:href="@{/downloadFile/{fileId}(fileId=${file.id})}">Download</a></td>
+                <td><a class="btn btn-info" th:href="@{/downloadFile/{fileId}(fileId=${file.id})}" role="button">Download</a></td>
             </tr>
             </tbody>
         </table>

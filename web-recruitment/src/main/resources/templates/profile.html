@@ -62,7 +62,7 @@
             <tr th:each="post : ${posts}">
                 <td th:text="${post.title}" ></td>
                 <td th:text="${post.description}" ></td>
-                <td><a th:href="@{/users/{username}/posts/{post-id}(username=${session.username},post-id=${post.id})}">Delete from list</a></td>
+                <td><a class="btn btn-info" th:href="@{/users/{username}/posts/{post-id}(username=${session.username},post-id=${post.id})}" role="button">Delete</a></td>
             </tr>
             </tbody>
         </table>
