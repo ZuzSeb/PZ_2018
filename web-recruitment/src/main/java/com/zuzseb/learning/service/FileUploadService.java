@@ -13,4 +13,5 @@ public interface FileUploadService {
     List<File> findByUser(User user);
     void deleteFiles(List<File> files);
     void deleteFileByUserAndPost(User user, Post post);
+    boolean applyForPodst(User user, Post post);
 }

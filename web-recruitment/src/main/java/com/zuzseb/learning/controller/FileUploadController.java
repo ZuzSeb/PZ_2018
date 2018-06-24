@@ -4,6 +4,7 @@ import com.zuzseb.learning.exception.UserNotFoundException;
 import com.zuzseb.learning.model.File;
 import com.zuzseb.learning.model.Post;
 import com.zuzseb.learning.model.User;
+import com.zuzseb.learning.repository.FileUploadRepository;
 import com.zuzseb.learning.repository.PostRepository;
 import com.zuzseb.learning.service.FileUploadService;
 import com.zuzseb.learning.service.UserService;
@@ -52,25 +53,33 @@ public class FileUploadController {
                                    Map<String, Object> model) {
         LOGGER.info("POST /upload/{}", postId);
         if (file != null) {
-            try {
-                byte[] bytes = file.getBytes();
-                String login = session.getAttribute("username").toString();
-                User user = userService.findByLogin(login);
-                File uploadFile = new File(file.getOriginalFilename(), bytes, user, postRepository.findOne(postId));
-                fileUploadService.save(uploadFile);
-            } catch (IOException e) {
-                LOGGER.error("Uploading file error");
-                model.put("infoMessage", "Ups, something went wrong.");
-                return "info/error";
-            } catch (UserNotFoundException e) {
-                model.put("infoMessage", "User was not found.");
+
+                try {
+                    byte[] bytes = file.getBytes();
+                    String login = session.getAttribute("username").toString();
+                    User user = userService.findByLogin(login);
+                    Post post = postRepository.findOne(postId);
+                    if (fileUploadService.applyForPodst(user, post)) {
+                        File uploadFile = new File(file.getOriginalFilename(), bytes, user, postRepository.findOne(postId));
+                        fileUploadService.save(uploadFile);
+                    } else {
+                        model.put("infoMessage", "You've applied for this post already. Please delete your submission and then reapply.");
+                        return "info/error";
+                    }
+                } catch (IOException e) {
+                    LOGGER.error("Uploading file error");
+                    model.put("infoMessage", "Ups, something went wrong.");
+                    return "info/error";
+                } catch (UserNotFoundException e) {
+                    model.put("infoMessage", "User was not found.");
+                    return "info/error";
+                }
+                model.put("infoMessage", "Successfully applied.");
+                return "info/success";
+            } else {
+                model.put("infoMessage", "File was not given.");
                 return "info/error";
             }
-            model.put("infoMessage", "Successfully applied.");
-            return "info/success";
-        } else {
-            model.put("infoMessage", "File was not given.");
-            return "info/error";
-        }
+
     }
 }

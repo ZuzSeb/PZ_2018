@@ -54,4 +54,13 @@ public class FileUploadServiceImpl implements FileUploadService {
                 .getResultList();
         files.forEach(f -> em.remove(f));
     }
+
+    @Override
+    public boolean applyForPodst(User user, Post post) {
+        List<File> files = em.createNamedQuery("File.findUserFile", File.class)
+                .setParameter("user", user)
+                .setParameter("post", post)
+                .getResultList();
+        return files.isEmpty();
+    }
 }
